@@ -1,0 +1,24 @@
+language: bash
+
+services: docker
+
+install:
+  - git clone https://github.com/docker-library/official-images.git ~/official-images
+
+script:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker version
+  - docker info
+  - travis_retry docker build -t "$TRAVIS_REPO_SLUG" .
+  - ~/official-images/test/run.sh "$TRAVIS_REPO_SLUG"
+
+after_success:
+  - |
+    if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+      read -a v <<< $(echo ${TRAVIS_TAG} | sed 's/[\.\-]/ /g')
+      for TAG in $TRAVIS_TAG ${v[0]}.${v[1]}.${v[2]} ${v[0]}.${v[1]} ${v[0]} latest
+      do
+        docker tag "$TRAVIS_REPO_SLUG" "$TRAVIS_REPO_SLUG":"$TAG"
+        docker push "$TRAVIS_REPO_SLUG":"$TAG"
+      done
+    fi
