@@ -38,7 +38,7 @@ ENV JVM_SUPPORT_RECOMMENDED_ARGS "-Datlassian.plugins.enable.wait=300"
 VOLUME $BAMBOO_HOME
 WORKDIR $BAMBOO_HOME
 
-EXPOSE 8080 8005
+EXPOSE 8085 8007
 
 ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
 CMD [ "/etc/init.d/bamboo", "start", "-fg" ]
@@ -61,7 +61,7 @@ RUN set -ex \
 
 # Install Atlassian Bamboo
 RUN set -ex \
-    && ARCHIVE="`mktemp --suffix=tar.gz`" \
+    && ARCHIVE="`mktemp --suffix=.tar.gz`" \
     && curl -skL $BAMBOO_DOWNLOAD_URL > $ARCHIVE \
     && mkdir -p $BAMBOO_CATALINA \
     && tar zxf $ARCHIVE --strip-components=1 -C $BAMBOO_CATALINA \
