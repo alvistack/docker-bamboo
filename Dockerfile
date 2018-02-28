@@ -61,7 +61,7 @@ RUN set -ex \
 
 # Install Atlassian Bamboo
 RUN set -ex \
-    && ARCHIVE="`mktemp --suffix=tar.gz`" \
+    && ARCHIVE="`mktemp --suffix=.tar.gz`" \
     && curl -skL $BAMBOO_DOWNLOAD_URL > $ARCHIVE \
     && mkdir -p $BAMBOO_CATALINA \
     && tar zxf $ARCHIVE --strip-components=1 -C $BAMBOO_CATALINA \
