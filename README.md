@@ -4,7 +4,7 @@ Docker Image Packaging for Atlassian Bamboo
 [![Travis](https://img.shields.io/travis/alvistack/docker-bamboo.svg)](https://travis-ci.org/alvistack/docker-bamboo)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/blob/master/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/docker-bamboo.svg)](https://hub.docker.com/r/alvistack/docker-bamboo/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo.svg)](https://hub.docker.com/r/alvistack/bamboo/)
 
 Bamboo is a continuous integration (CI) server that can be used to automate the release management for a software application, creating a continuous delivery pipeline.
 
@@ -24,7 +24,7 @@ Volume permission is managed by entry scripts. To get started you can use a data
 Start Atlassian Bamboo Server:
 
     # Pull latest image
-    docker pull alvistack/docker-bamboo
+    docker pull alvistack/bamboo
 
     # Run as detach
     docker run \
@@ -32,7 +32,7 @@ Start Atlassian Bamboo Server:
         --name bamboo \
         --publish 8085:8085 \
         --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
-        alvistack/docker-bamboo
+        alvistack/bamboo
 
 **Success**. Bamboo is now available on <http://localhost:8085>
 
@@ -121,7 +121,7 @@ For evaluations you can use the built-in database that will store its files in t
 Versioning
 ----------
 
-The `latest` tag matches the most recent version of this repository. Thus using `alvistack/docker-bamboo:latest` or `alvistack/docker-bamboo` will ensure you are running the most up to date version of this image.
+The `latest` tag matches the most recent version of this repository. Thus using `alvistack/bamboo:latest` or `alvistack/bamboo` will ensure you are running the most up to date version of this image.
 
 License
 -------
