@@ -31,8 +31,8 @@ ENV JVM_SUPPORT_RECOMMENDED_ARGS "-Datlassian.plugins.enable.wait=300"
 VOLUME  $BAMBOO_HOME
 WORKDIR $BAMBOO_HOME
 
-EXPOSE 8085
 EXPOSE 8007
+EXPOSE 8085
 
 ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
 CMD        [ "/etc/init.d/bamboo", "start", "-fg" ]
