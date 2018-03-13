@@ -24,4 +24,7 @@ after_success:
         docker tag "$IMAGE" "$IMAGE":"$TAG"
         docker push "$IMAGE":"$TAG"
       done
+    elif [[ $TRAVIS_BRANCH =~ ^[0-9]+\.[0-9]+ ]]; then
+      docker tag "$IMAGE" "$IMAGE":"$TRAVIS_BRANCH"
+      docker push "$IMAGE":"$TRAVIS_BRANCH"
     fi

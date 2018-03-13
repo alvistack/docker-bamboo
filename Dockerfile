@@ -41,7 +41,7 @@ CMD        [ "/etc/init.d/bamboo", "start", "-fg" ]
 # Prepare APT depedencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y alien apt-transport-https apt-utils aptitude bzip2 ca-certificates curl debian-archive-keyring debian-keyring git htop psmisc python-apt rsync sudo unzip vim wget zip \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y alien apt-transport-https apt-utils aptitude bzip2 ca-certificates curl debian-archive-keyring debian-keyring git htop patch psmisc python-apt rsync sudo unzip vim wget zip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Oracle JRE
@@ -68,6 +68,10 @@ RUN set -ex \
 
 # Copy files
 COPY files /
+
+# Apply patches
+RUN set -ex \
+    && patch -d/ -p0 < /.patch
 
 # Ensure required folders exist with correct owner:group
 RUN set -ex \
