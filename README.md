@@ -10,6 +10,12 @@ Bamboo is a continuous integration (CI) server that can be used to automate the 
 
 Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
+Supported Tags and Respective `Dockerfile` Links
+------------------------------------------------
+
+-   [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/master/Dockerfile)
+-   [`6.4` (6.4/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.4/Dockerfile)
+
 Overview
 --------
 
