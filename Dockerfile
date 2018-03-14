@@ -71,7 +71,7 @@ COPY files /
 
 # Apply patches
 RUN set -ex \
-    && patch -d/ -p0 < /.patch
+    && patch -d/ -p1 < /.patch
 
 # Ensure required folders exist with correct owner:group
 RUN set -ex \
