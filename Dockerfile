@@ -63,7 +63,7 @@ RUN set -ex \
 
 # Install MariaDB Connector/J JAR
 RUN set -ex \
-    && curl -skL https://downloads.mariadb.com/Connectors/java/connector-java-2.2.1/mariadb-java-client-2.2.1.jar > /opt/atlassian/bitbucket/app/WEB-INF/lib/mariadb-java-client-2.2.1.jar
+    && curl -skL https://downloads.mariadb.com/Connectors/java/connector-java-2.2.1/mariadb-java-client-2.2.1.jar > $BAMBOO_CATALINA/lib/mariadb-java-client-2.2.1.jar
 
 # Install dumb-init
 RUN set -ex \
