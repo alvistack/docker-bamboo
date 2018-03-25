@@ -61,9 +61,12 @@ RUN set -ex \
     && chown -Rf $BAMBOO_OWNER:$BAMBOO_GROUP $BAMBOO_CATALINA \
     && rm -rf $ARCHIVE
 
-# Install MariaDB Connector/J JAR
+# Install MySQL Connector/J JAR
 RUN set -ex \
-    && curl -skL https://downloads.mariadb.com/Connectors/java/connector-java-2.2.1/mariadb-java-client-2.2.1.jar > $BAMBOO_CATALINA/lib/mariadb-java-client-2.2.1.jar
+    && ARCHIVE="`mktemp --suffix=.tar.gz`" \
+    && curl -skL https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz > $ARCHIVE \
+    && tar zxf $ARCHIVE --strip-components=1 -C $BAMBOO_CATALINA/lib/ mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar \
+    && rm -rf $ARCHIVE
 
 # Install dumb-init
 RUN set -ex \
