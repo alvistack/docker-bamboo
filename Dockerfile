@@ -35,7 +35,7 @@ WORKDIR $BAMBOO_HOME
 EXPOSE 8007
 EXPOSE 8085
 
-ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
+ENTRYPOINT [ "dumb-init", "--" ]
 CMD        [ "/etc/init.d/bamboo", "start", "-fg" ]
 
 # Prepare APT depedencies
