@@ -14,7 +14,7 @@ Supported Tags and Respective `Dockerfile` Links
 ------------------------------------------------
 
 -   [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/master/Dockerfile)
--   [`6.4` (6.4/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.4/Dockerfile)
+-   [`6.5` (6.5/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.5/Dockerfile)
 
 Overview
 --------
