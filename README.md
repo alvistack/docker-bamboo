@@ -38,11 +38,30 @@ Start Atlassian Bamboo Server:
         --name bamboo \
         --publish 8085:8085 \
         --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
+        --volume /var/run/docker.sock:/var/run/docker.sock \
+        --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+        --tmpfs /run \
+        --tmpfs /run/lock \
         alvistack/bamboo
 
 **Success**. Bamboo is now available on <http://localhost:8085>
 
 Please ensure your container has the necessary resources allocated to it. We recommend 2GiB of memory allocated to accommodate both the application server and the git processes. See [Supported Platforms](https://confluence.atlassian.com/display/Bamboo/Supported+Platforms) for further information.
+
+### Run Build with Docker
+
+Docker CE installed together with this image, so you could run build independently with Docker, rather than mess up this image by forking it and keep adding your required library support into Dockerfile. Bamboo will auto detect the `docker` binary installed for you, so no additional configuration is required.
+
+To correctly activate the Docker support for your build plan, simply mount the host machine's Docker socket to this container. This will allow your container to use the host machine's Docker daemon to run containers and build images.
+
+In the above quick start example, these 4 lines did the magic for your:
+
+        ...
+        --volume /var/run/docker.sock:/var/run/docker.sock \
+        --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+        --tmpfs /run \
+        --tmpfs /run/lock \
+        ...
 
 ### Memory / Heap Size
 

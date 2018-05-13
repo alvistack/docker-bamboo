@@ -41,7 +41,22 @@ CMD        [ "/etc/init.d/bamboo", "start", "-fg" ]
 # Prepare APT depedencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y alien apt-transport-https apt-utils aptitude bzip2 ca-certificates curl debian-archive-keyring debian-keyring git htop patch psmisc python-apt rsync sudo unzip vim wget zip \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y alien apt-transport-https apt-utils aptitude bzip2 ca-certificates curl debian-archive-keyring debian-keyring git htop patch psmisc python-apt rsync software-properties-common sudo unzip vim wget zip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install GIT
+RUN set -ex \
+    && add-apt-repository -y ppa:git-core/ppa \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Docker CE
+RUN set -ex \
+    && curl -sL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+    && add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Oracle JRE
