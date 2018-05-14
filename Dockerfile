@@ -53,7 +53,7 @@ RUN set -ex \
 # Install SVN
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y subversion \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y libsvn-java subversion \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GIT
