@@ -44,11 +44,38 @@ RUN set -ex \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y alien apt-transport-https apt-utils aptitude bzip2 ca-certificates curl debian-archive-keyring debian-keyring git htop patch psmisc python-apt rsync software-properties-common sudo unzip vim wget zip \
     && rm -rf /var/lib/apt/lists/*
 
+# Install CVS
+RUN set -ex \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y cvs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install SVN
+RUN set -ex \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y subversion \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install GIT
 RUN set -ex \
     && add-apt-repository -y ppa:git-core/ppa \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Mercurial
+RUN set -ex \
+    && add-apt-repository -y ppa:mercurial-ppa/releases \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y mercurial \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Perforce
+RUN set -ex \
+    && curl -sL https://package.perforce.com/perforce.pubkey | apt-key add - \
+    && add-apt-repository -y "deb http://package.perforce.com/apt/ubuntu $(lsb_release -cs) release" \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y helix-cli \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Docker CE
