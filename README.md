@@ -48,6 +48,30 @@ Start Atlassian Bamboo Server:
 
 Please ensure your container has the necessary resources allocated to it. We recommend 2GiB of memory allocated to accommodate both the application server and the git processes. See [Supported Platforms](https://confluence.atlassian.com/display/Bamboo/Supported+Platforms) for further information.
 
+### Run as Remote Agent
+
+Simply running this image as Bamboo Remote Agent, by directly specify the path of the required JAR file.
+
+This is because image already coming with dependencies that required for running Bamboo Server or Remote Agent, therefore the Remote Agent JAR could also be found from:
+
+-   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
+-   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
+
+Start Atlassian Bamboo Remote Agent:
+
+    # Run as detach
+    docker run \
+        -itd \
+        --name bamboo \
+        --publish 8085:8085 \
+        --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
+        --volume /var/run/docker.sock:/var/run/docker.sock \
+        --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+        --tmpfs /run \
+        --tmpfs /run/lock \
+        alvistack/bamboo \
+        java -jar /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar http://bamboo-host-server:8085/bamboo/agentServer/
+
 ### Run Build with Docker
 
 Docker CE installed together with this image, so you could run build independently with Docker, rather than mess up this image by forking it and keep adding your required library support into Dockerfile. Bamboo will auto detect the `docker` binary installed for you, so no additional configuration is required.
