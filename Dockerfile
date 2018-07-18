@@ -90,7 +90,7 @@ RUN set -ex \
 RUN set -ex \
     && ln -s /usr/bin/update-alternatives /usr/sbin/alternatives \
     && ARCHIVE="`mktemp --suffix=.rpm`" \
-    && curl -skL -j -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jre-8u172-linux-x64.rpm > $ARCHIVE \
+    && curl -skL -j -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jre-8u181-linux-x64.rpm > $ARCHIVE \
     && DEBIAN_FRONTEND=noninteractive alien -i -k --scripts $ARCHIVE \
     && rm -rf $ARCHIVE
 
