@@ -106,9 +106,14 @@ RUN set -ex \
 # Install MySQL Connector/J JAR
 RUN set -ex \
     && ARCHIVE="`mktemp --suffix=.tar.gz`" \
-    && curl -skL https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.11.tar.gz > $ARCHIVE \
-    && tar zxf $ARCHIVE --strip-components=1 -C $BAMBOO_CATALINA/lib/ mysql-connector-java-8.0.11/mysql-connector-java-8.0.11.jar \
+    && curl -skL https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.12.tar.gz > $ARCHIVE \
+    && tar zxf $ARCHIVE --strip-components=1 -C $BAMBOO_CATALINA/lib/ mysql-connector-java-8.0.12/mysql-connector-java-8.0.12.jar \
     && rm -rf $ARCHIVE
+
+# Install PostgreSQL JDBC JAR
+RUN set -ex \
+    && rm -rf $BAMBOO_CATALINA/lib/*postgresql*.jar \
+    && curl -skL https://jdbc.postgresql.org/download/postgresql-42.2.4.jar > $BAMBOO_CATALINA/lib/postgresql-42.2.4.jar
 
 # Install dumb-init
 RUN set -ex \
