@@ -1,6 +1,6 @@
 diff -urp a/opt/atlassian/bamboo/bin/setenv.sh b/opt/atlassian/bamboo/bin/setenv.sh
---- a/opt/atlassian/bamboo/bin/setenv.sh	2018-03-14 01:24:29.347346877 +0800
-+++ b/opt/atlassian/bamboo/bin/setenv.sh	2018-03-10 22:10:03.570420148 +0800
+--- a/opt/atlassian/bamboo/bin/setenv.sh	2018-09-20 17:33:31.777308176 +0800
++++ b/opt/atlassian/bamboo/bin/setenv.sh	2018-09-20 17:36:38.480864442 +0800
 @@ -1,13 +1,13 @@
 -#!/bin/sh
 +#!/bin/bash
@@ -35,7 +35,7 @@ diff -urp a/opt/atlassian/bamboo/bin/setenv.sh b/opt/atlassian/bamboo/bin/setenv
  
  #-----------------------------------------------------------------------------------
  #
-@@ -38,20 +38,43 @@ BAMBOO_HOME_MINUSD=""
+@@ -38,23 +38,48 @@ BAMBOO_HOME_MINUSD=""
  if [ "$BAMBOO_HOME" != "" ]; then
      echo $BAMBOO_HOME | grep -q " "
      if [ $? -eq 0 ]; then
@@ -86,9 +86,14 @@ diff -urp a/opt/atlassian/bamboo/bin/setenv.sh b/opt/atlassian/bamboo/bin/setenv
  echo ""
  echo "If you encounter issues starting or stopping Bamboo Server, please see the Troubleshooting guide at https://confluence.atlassian.com/display/BAMBOO/Installing+and+upgrading+Bamboo"
  echo ""
+ if [ "$BAMBOO_HOME_MINUSD" != "" ]; then
+     echo "Using BAMBOO_HOME:       $BAMBOO_HOME"
+ fi
++
++sed -i "s/\(<session-timeout>\).*\(<\/session-timeout>\)/\1${SESSION_TIMEOUT:-30}\2/g" ${BAMBOO_CATALINA}/atlassian-bamboo/WEB-INF/web.xml
 diff -urp a/opt/atlassian/bamboo/conf/server.xml b/opt/atlassian/bamboo/conf/server.xml
---- a/opt/atlassian/bamboo/conf/server.xml	2018-03-14 01:24:43.308155053 +0800
-+++ b/opt/atlassian/bamboo/conf/server.xml	2018-03-10 22:10:03.570420148 +0800
+--- a/opt/atlassian/bamboo/conf/server.xml	2018-09-20 17:33:31.781308082 +0800
++++ b/opt/atlassian/bamboo/conf/server.xml	2018-09-20 17:25:38.000000000 +0800
 @@ -61,6 +61,10 @@
              URIEncoding="UTF-8"
  
