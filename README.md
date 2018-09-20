@@ -155,7 +155,7 @@ Other else misc configuration.
 
 Default timezone for the docker instance
 
-Default: `Etc/UTC`
+Default: `UTC`
 
 Upgrade
 -------
