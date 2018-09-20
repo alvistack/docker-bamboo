@@ -147,6 +147,16 @@ Additional JVM arguments for Bamboo
 
 Default: `-Datlassian.plugins.enable.wait=300`
 
+### Misc configuration
+
+Other else misc configuration.
+
+#### TZ
+
+Default timezone for the docker instance
+
+Default: `Etc/UTC`
+
 Upgrade
 -------
 
