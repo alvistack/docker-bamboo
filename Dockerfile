@@ -28,7 +28,7 @@ ENV CATALINA_CONNECTOR_SCHEME    "http"
 ENV CATALINA_CONNECTOR_SECURE    "false"
 ENV CATALINA_CONTEXT_PATH        ""
 ENV JVM_SUPPORT_RECOMMENDED_ARGS "-Datlassian.plugins.enable.wait=300"
-ENV TZ                           "Etc/UTC"
+ENV TZ                           "UTC"
 
 VOLUME  $BAMBOO_HOME
 WORKDIR $BAMBOO_HOME
