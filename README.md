@@ -157,6 +157,12 @@ Default timezone for the docker instance
 
 Default: `UTC`
 
+#### SESSION\_TIMEOUT
+
+Default session timeout for Apache Tomcat
+
+Default: `30`
+
 Upgrade
 -------
 
