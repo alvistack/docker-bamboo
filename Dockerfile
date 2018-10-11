@@ -74,7 +74,7 @@ RUN set -ex \
 
 # Install Perforce
 RUN set -ex \
-    && curl -sL https://package.perforce.com/perforce.pubkey | apt-key add - \
+    && curl -skL https://package.perforce.com/perforce.pubkey | apt-key add - \
     && add-apt-repository -y "deb http://package.perforce.com/apt/ubuntu $(lsb_release -cs) release" \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y helix-cli \
@@ -82,7 +82,7 @@ RUN set -ex \
 
 # Install Docker CE
 RUN set -ex \
-    && curl -sL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+    && curl -skL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
     && add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce \
