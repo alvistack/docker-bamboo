@@ -1,5 +1,4 @@
-Docker Image Packaging for Atlassian Bamboo
-===========================================
+# Docker Image Packaging for Atlassian Bamboo
 
 [![Travis](https://img.shields.io/travis/alvistack/docker-bamboo.svg)](https://travis-ci.org/alvistack/docker-bamboo)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
@@ -10,21 +9,19 @@ Bamboo is a continuous integration (CI) server that can be used to automate the 
 
 Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
-Supported Tags and Respective `Dockerfile` Links
-------------------------------------------------
+## Supported Tags and Respective `Dockerfile` Links
 
--   [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/master/Dockerfile)
--   [`6.7` (6.7/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.7/Dockerfile)
--   [`6.6` (6.6/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.6/Dockerfile)
+  - [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/master/Dockerfile)
+  - [`6.7` (6.7/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.7/Dockerfile)
+  - [`6.6` (6.6/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.6/Dockerfile)
 
-Overview
---------
+## Overview
 
 This Docker container makes it easy to get an instance of Bamboo up and running.
 
 ### Quick Start
 
-For the `BAMBOO_HOME` directory that is used to store the repository data (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/engine/tutorials/dockervolumes/#/data-volumes), or via a named volume if using a docker version &gt;= 1.9.
+For the `BAMBOO_HOME` directory that is used to store the repository data (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/engine/tutorials/dockervolumes/#/data-volumes), or via a named volume if using a docker version \>= 1.9.
 
 Volume permission is managed by entry scripts. To get started you can use a data volume, or named volumes.
 
@@ -55,8 +52,8 @@ Simply running this image as Bamboo Remote Agent, by directly specify the path o
 
 This is because image already coming with dependencies that required for running Bamboo Server or Remote Agent, therefore the Remote Agent JAR could also be found from:
 
--   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
--   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
+  - /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
+  - /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
 
 Start Atlassian Bamboo Remote Agent:
 
@@ -81,12 +78,12 @@ To correctly activate the Docker support for your build plan, simply mount the h
 
 In the above quick start example, these 4 lines did the magic for your:
 
-        ...
-        --volume /var/run/docker.sock:/var/run/docker.sock \
-        --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-        --tmpfs /run \
-        --tmpfs /run/lock \
-        ...
+    ...
+    --volume /var/run/docker.sock:/var/run/docker.sock \
+    --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+    --tmpfs /run \
+    --tmpfs /run/lock \
+    ...
 
 ### Memory / Heap Size
 
@@ -164,8 +161,7 @@ Default session timeout for Apache Tomcat
 
 Default: `30`
 
-Upgrade
--------
+## Upgrade
 
 To upgrade to a more recent version of Bamboo Server you can simply stop the Bamboo
 container and start a new one based on a more recent image:
@@ -179,26 +175,21 @@ be available after the upgrade.
 
 Note: Please make sure that you don't accidentally remove the bamboo container and its volumes using the -v option.
 
-Backup
-------
+## Backup
 
 For evaluations you can use the built-in database that will store its files in the Bamboo Server home directory. In that case it is sufficient to create a backup archive of the directory on the host that is used as a volume (`/var/atlassian/application-data/bamboo` in the example above).
 
-Versioning
-----------
+## Versioning
 
 The `latest` tag matches the most recent version of this repository. Thus using `alvistack/bamboo:latest` or `alvistack/bamboo` will ensure you are running the most up to date version of this image.
 
-License
--------
+## License
 
--   Code released under [Apache License 2.0](LICENSE)
--   Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+  - Code released under [Apache License 2.0](LICENSE)
+  - Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
 
-Author Information
-------------------
+## Author Information
 
--   Wong Hoi Sing Edison
-    -   <https://twitter.com/hswong3i>
-    -   <https://github.com/hswong3i>
-
+  - Wong Hoi Sing Edison
+      - <https://twitter.com/hswong3i>
+      - <https://github.com/hswong3i>
