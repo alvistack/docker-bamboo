@@ -29,7 +29,7 @@ Start Atlassian Bamboo Server:
 
     # Pull latest image
     docker pull alvistack/bamboo
-
+    
     # Run as detach
     docker run \
         -itd \
