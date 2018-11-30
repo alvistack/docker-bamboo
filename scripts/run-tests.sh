@@ -2,7 +2,7 @@
 
 set -o xtrace
 
-DOCKER_IMAGE=${DOCKER_IMAGE:-"hello-world"}
+IMAGE=${IMAGE:-"hello-world"}
 
-docker build -t "$DOCKER_IMAGE" .
-~/.docker/official-images/test/run.sh "$DOCKER_IMAGE"
+docker build -t "$IMAGE" .
+~/.docker/official-images/test/run.sh "$IMAGE"
