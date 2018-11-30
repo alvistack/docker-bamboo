@@ -11,12 +11,12 @@ before_install:
   - docker info
 
 install:
-  - IMAGE=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
+  - export IMAGE=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
   - mkdir -p ~/.docker
   - git clone https://github.com/docker-library/official-images.git ~/.docker/official-images
 
 script:
-  - ./scripts/run-tests.sh
+  - sudo ./scripts/run-tests.sh
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
