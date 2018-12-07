@@ -1,0 +1,78 @@
+---
+
+# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Use `gather_faces: no` to initialize Python on system that not yet
+# pre-installed with Python (e.g. Ubuntu 16.04 Cloud Image and Docker Image).
+- hosts: all
+  remote_user: root
+  gather_facts: no
+  roles:
+    - role: python
+    - role: ansible
+    - role: apt
+    - role: yum
+    - role: locales
+    - role: timezone
+    - role: dumb-init
+
+- hosts: all
+  remote_user: root
+  roles:
+    - role: cvs
+    - role: svn
+    - role: git
+    - role: mercurial
+    - role: perforce
+    - role: docker
+    - role: java
+      apt:
+        - { state: "latest", name: "openjdk-8-jdk" }
+      java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
+      when: ansible_os_family | lower == 'debian'
+    - role: java
+      yum:
+        - { state: "latest", name: "java-1.8.0-openjdk" }
+      java_home: "/usr/lib/jvm/jre-openjdk"
+      when: ansible_os_family | lower == 'redhat'
+    - role: bamboo
+      bamboo_download_url: "{{ lookup('env','BAMBOO_DOWNLOAD_URL') }}"
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: flush pip cache
+      file:
+        dest: "{{ item.dest }}"
+        state: "{{ item.state }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      with_items:
+        - { state: "absent", dest: "/root/.cache/pip", owner: "root", group: "root", mode: "0755" }
+      changed_when: false
+
+    - name: flush apt lists cache
+      file:
+        dest: "{{ item.dest }}"
+        state: "{{ item.state }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      with_items:
+        - { state: "absent", dest: "/var/lib/apt/lists", owner: "root", group: "root", mode: "0755" }
+        - { state: "directory", dest: "/var/lib/apt/lists", owner: "root", group: "root", mode: "0755" }
+        - { state: "touch", dest: "/var/lib/apt/lists/lock", owner: "root", group: "root", mode: "0640" }
+      changed_when: false
