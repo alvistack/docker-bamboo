@@ -26,7 +26,6 @@
     - role: yum
     - role: locales
     - role: timezone
-      timezone: "{{ lookup('env', 'TZ') }}"
     - role: dumb-init
 
 - hosts: all
