@@ -1,0 +1,61 @@
+---
+
+- name: ansible
+  src: https://github.com/alvistack/ansible-role-ansible
+  version: master
+
+- name: apt
+  src: https://github.com/alvistack/ansible-role-apt
+  version: master
+
+- name: bamboo
+  src: https://github.com/alvistack/ansible-role-bamboo
+  version: master
+
+- name: cvs
+  src: https://github.com/alvistack/ansible-role-cvs
+  version: master
+
+- name: docker
+  src: https://github.com/alvistack/ansible-role-docker
+  version: master
+
+- name: dumb-init
+  src: https://github.com/alvistack/ansible-role-dumb-init
+  version: master
+
+- name: git
+  src: https://github.com/alvistack/ansible-role-git
+  version: master
+
+- name: java
+  src: https://github.com/alvistack/ansible-role-java
+  version: master
+
+- name: locales
+  src: https://github.com/alvistack/ansible-role-locales
+  version: master
+
+- name: mercurial
+  src: https://github.com/alvistack/ansible-role-mercurial
+  version: master
+
+- name: perforce
+  src: https://github.com/alvistack/ansible-role-perforce
+  version: master
+
+- name: python
+  src: https://github.com/alvistack/ansible-role-python
+  version: master
+
+- name: svn
+  src: https://github.com/alvistack/ansible-role-svn
+  version: master
+
+- name: timezone
+  src: https://github.com/alvistack/ansible-role-timezone
+  version: master
+
+- name: yum
+  src: https://github.com/alvistack/ansible-role-yum
+  version: master
