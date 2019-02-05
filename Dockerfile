@@ -14,8 +14,8 @@
 
 FROM ubuntu:18.04
 
-ENV BAMBOO_OWNER                 "daemon"
-ENV BAMBOO_GROUP                 "daemon"
+ENV BAMBOO_OWNER                 "bamboo"
+ENV BAMBOO_GROUP                 "bamboo"
 ENV BAMBOO_HOME                  "/var/atlassian/application-data/bamboo"
 ENV BAMBOO_CATALINA              "/opt/atlassian/bamboo"
 ENV BAMBOO_DOWNLOAD_URL          "https://product-downloads.atlassian.com/software/bamboo/downloads/atlassian-bamboo-6.8.0.tar.gz"
