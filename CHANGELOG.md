@@ -1,6 +1,6 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-## 6.7.x-0alvistack1 - TBC
+## 6.8.x-0alvistack1 - TBC
 
 ### Major Changes
 
