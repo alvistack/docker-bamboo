@@ -40,6 +40,11 @@ EXPOSE 8085
 ENTRYPOINT [ "dumb-init", "--" ]
 CMD        [ "docker-entrypoint.sh" ]
 
+# Explicitly set system user UID/GID
+RUN set -ex \
+    && groupadd -r $BAMBOO_OWNER \
+    && useradd -r -g $BAMBOO_GROUP -d $BAMBOO_HOME -M -s /usr/sbin/nologin $BAMBOO_OWNER
+
 # Prepare APT depedencies
 RUN set -ex \
     && apt-get update \
