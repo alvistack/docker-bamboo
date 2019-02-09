@@ -23,7 +23,7 @@ This Docker container makes it easy to get an instance of Bamboo up and running.
 
 For the `BAMBOO_HOME` directory that is used to store the repository data (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/engine/tutorials/dockervolumes/#/data-volumes), or via a named volume if using a docker version \>= 1.9.
 
-Volume permission is managed by entry scripts. To get started you can use a data volume, or named volumes.
+Volume permission is NOT managed by entry scripts. To get started you can use a data volume, or named volumes.
 
 Start Atlassian Bamboo Server:
 
