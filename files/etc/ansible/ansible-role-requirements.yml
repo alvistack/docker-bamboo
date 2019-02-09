@@ -4,8 +4,8 @@
   src: https://github.com/alvistack/ansible-role-ansible
   version: master
 
-- name: apt
-  src: https://github.com/alvistack/ansible-role-apt
+- name: bootstrap
+  src: https://github.com/alvistack/ansible-role-bootstrap
   version: master
 
 - name: bamboo
@@ -54,8 +54,4 @@
 
 - name: timezone
   src: https://github.com/alvistack/ansible-role-timezone
-  version: master
-
-- name: yum
-  src: https://github.com/alvistack/ansible-role-yum
   version: master

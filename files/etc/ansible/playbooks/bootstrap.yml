@@ -17,10 +17,9 @@
 - hosts: all
   remote_user: root
   roles:
+    - role: bootstrap
     - role: python
     - role: ansible
-    - role: apt
-    - role: yum
     - role: locales
     - role: timezone
     - role: dumb-init
