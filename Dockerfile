@@ -45,7 +45,7 @@ RUN set -ex \
     && groupadd -r $BAMBOO_OWNER \
     && useradd -r -g $BAMBOO_GROUP -d $BAMBOO_HOME -M -s /usr/sbin/nologin $BAMBOO_OWNER
 
-# Prepare APT depedencies
+# Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential curl git libffi-dev libssl-dev python python-dev \
