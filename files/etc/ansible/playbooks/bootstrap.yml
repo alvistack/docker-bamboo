@@ -37,12 +37,6 @@
       package:
         - { state: "latest", name: "openjdk-8-jdk" }
       java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
-      when: ansible_os_family | lower == 'debian'
-    - role: java
-      package:
-        - { state: "latest", name: "java-1.8.0-openjdk" }
-      java_home: "/usr/lib/jvm/jre-openjdk"
-      when: ansible_os_family | lower == 'redhat'
     - role: bamboo
       bamboo_download_url: "{{ lookup('env','BAMBOO_DOWNLOAD_URL') }}"
 
