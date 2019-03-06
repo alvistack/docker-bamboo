@@ -1,57 +1,43 @@
 ---
 
 - name: ansible
-  src: https://github.com/alvistack/ansible-role-ansible
-  version: master
+  src: https://github.com/alvistack/ansible-role-ansible/archive/master.tar.gz
 
 - name: bootstrap
-  src: https://github.com/alvistack/ansible-role-bootstrap
-  version: master
+  src: https://github.com/alvistack/ansible-role-bootstrap/archive/master.tar.gz
 
 - name: bamboo
-  src: https://github.com/alvistack/ansible-role-bamboo
-  version: master
+  src: https://github.com/alvistack/ansible-role-bamboo/archive/master.tar.gz
 
 - name: cvs
-  src: https://github.com/alvistack/ansible-role-cvs
-  version: master
+  src: https://github.com/alvistack/ansible-role-cvs/archive/master.tar.gz
 
 - name: docker
-  src: https://github.com/alvistack/ansible-role-docker
-  version: master
+  src: https://github.com/alvistack/ansible-role-docker/archive/master.tar.gz
 
 - name: dumb-init
-  src: https://github.com/alvistack/ansible-role-dumb-init
-  version: master
+  src: https://github.com/alvistack/ansible-role-dumb-init/archive/master.tar.gz
 
 - name: git
-  src: https://github.com/alvistack/ansible-role-git
-  version: master
+  src: https://github.com/alvistack/ansible-role-git/archive/master.tar.gz
 
 - name: java
-  src: https://github.com/alvistack/ansible-role-java
-  version: master
+  src: https://github.com/alvistack/ansible-role-java/archive/master.tar.gz
 
 - name: locales
-  src: https://github.com/alvistack/ansible-role-locales
-  version: master
+  src: https://github.com/alvistack/ansible-role-locales/archive/master.tar.gz
 
 - name: mercurial
-  src: https://github.com/alvistack/ansible-role-mercurial
-  version: master
+  src: https://github.com/alvistack/ansible-role-mercurial/archive/master.tar.gz
 
 - name: perforce
-  src: https://github.com/alvistack/ansible-role-perforce
-  version: master
+  src: https://github.com/alvistack/ansible-role-perforce/archive/master.tar.gz
 
 - name: python
-  src: https://github.com/alvistack/ansible-role-python
-  version: master
+  src: https://github.com/alvistack/ansible-role-python/archive/master.tar.gz
 
 - name: svn
-  src: https://github.com/alvistack/ansible-role-svn
-  version: master
+  src: https://github.com/alvistack/ansible-role-svn/archive/master.tar.gz
 
 - name: timezone
-  src: https://github.com/alvistack/ansible-role-timezone
-  version: master
+  src: https://github.com/alvistack/ansible-role-timezone/archive/master.tar.gz

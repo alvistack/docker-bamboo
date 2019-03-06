@@ -48,7 +48,7 @@ RUN set -ex \
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential curl git libffi-dev libssl-dev python python-dev \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential curl libffi-dev libssl-dev python python-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PIP
