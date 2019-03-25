@@ -38,7 +38,10 @@
         - { state: "latest", name: "openjdk-8-jdk" }
       java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
     - role: bamboo
-      bamboo_download_url: "{{ lookup('env','BAMBOO_DOWNLOAD_URL') }}"
+      bamboo_download:
+        url: "{{ lookup('env','BAMBOO_DOWNLOAD_URL') }}"
+        dest: "{{ lookup('env','BAMBOO_DOWNLOAD_DEST') }}"
+        checksum: "{{ lookup('env','BAMBOO_DOWNLOAD_CHECKSUM') }}"
 
 - hosts: all
   remote_user: root
@@ -65,4 +68,16 @@
         - { state: "absent", dest: "/var/lib/apt/lists", owner: "root", group: "root", mode: "0755" }
         - { state: "directory", dest: "/var/lib/apt/lists", owner: "root", group: "root", mode: "0755" }
         - { state: "touch", dest: "/var/lib/apt/lists/lock", owner: "root", group: "root", mode: "0640" }
+      changed_when: false
+
+    - name: flush tmp
+      file:
+        dest: "{{ item.dest }}"
+        state: "{{ item.state }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      with_items:
+        - { state: "absent", dest: "/tmp", owner: "root", group: "root", mode: "1777" }
+        - { state: "directory", dest: "/tmp", owner: "root", group: "root", mode: "1777" }
       changed_when: false
