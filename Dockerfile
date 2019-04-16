@@ -50,7 +50,7 @@ RUN set -ex \
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential curl libffi-dev libssl-dev python python-dev \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc libffi-dev libssl-dev make python python-dev sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PIP
@@ -59,17 +59,16 @@ RUN set -ex \
 
 # Install PIP dependencies
 RUN set -ex \
-    && pip install ansible ansible-lint yamllint \
-    && rm -rf /root/.cache/pip
+    && pip install --upgrade ansible ansible-lint molecule yamllint \
+    && rm -rf /root/.cache/*
 
 # Copy files
 COPY files /
 
 # Bootstrap with Ansible
 RUN set -ex \
-    && ansible-galaxy install --force --roles-path /etc/ansible/roles --role-file /etc/ansible/ansible-role-requirements.yml \
-    && yamllint --config-file /etc/ansible/.yamllint /etc/ansible \
-    && ansible-lint /etc/ansible/playbooks/bootstrap.yml \
-    && ansible-playbook /etc/ansible/playbooks/bootstrap.yml --syntax-check \
-    && ansible-playbook /etc/ansible/playbooks/bootstrap.yml --diff \
-    && ansible-playbook /etc/ansible/playbooks/bootstrap.yml --diff
+    && cd /etc/ansible/roles/localhost \
+    && molecule test \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cache/* \
+    && rm -rf /tmp/*

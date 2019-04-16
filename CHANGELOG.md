@@ -4,8 +4,13 @@
 
 ### Major Changes
 
+## 6.8.1-0alvistack3 - 2019-04-16
+
+### Major Changes
+
   - Run systemd service with specific system user
   - Explicitly set system user UID/GID
+  - Porting to Molecule based
 
 ## 6.7.1-1alvistack1 - 2018-12-10
 
