@@ -14,9 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: ansible
-  src: https://github.com/alvistack/ansible-role-ansible/archive/master.tar.gz
-
 - name: bootstrap
   src: https://github.com/alvistack/ansible-role-bootstrap/archive/master.tar.gz
 

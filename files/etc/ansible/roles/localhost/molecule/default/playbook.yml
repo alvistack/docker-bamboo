@@ -19,7 +19,6 @@
   roles:
     - role: bootstrap
     - role: python
-    - role: ansible
     - role: locales
     - role: timezone
     - role: dumb-init
