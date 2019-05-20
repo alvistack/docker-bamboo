@@ -50,17 +50,12 @@ RUN set -ex \
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc libffi-dev libssl-dev make python python-dev sudo \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev make python python-dev sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PIP
 RUN set -ex \
     && curl -skL https://bootstrap.pypa.io/get-pip.py | python
-
-# Install PIP dependencies
-RUN set -ex \
-    && pip install --upgrade ansible ansible-lint molecule yamllint \
-    && rm -rf /root/.cache/*
 
 # Copy files
 COPY files /
@@ -68,6 +63,7 @@ COPY files /
 # Bootstrap with Ansible
 RUN set -ex \
     && cd /etc/ansible/roles/localhost \
+    && pip install --upgrade --requirement requirements.txt \
     && molecule test \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache/* \
