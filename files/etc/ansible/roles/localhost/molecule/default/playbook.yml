@@ -37,7 +37,4 @@
         - { state: "latest", name: "openjdk-8-jdk" }
       java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
     - role: bamboo
-      bamboo_download:
-        url: "{{ lookup('env','BAMBOO_DOWNLOAD_URL') }}"
-        dest: "{{ lookup('env','BAMBOO_DOWNLOAD_DEST') }}"
-        checksum: "{{ lookup('env','BAMBOO_DOWNLOAD_CHECKSUM') }}"
+      bamboo_version: "{{ lookup('env','BAMBOO_VERSION') }}"
