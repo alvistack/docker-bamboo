@@ -12,8 +12,8 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 ## Supported Tags and Respective `Dockerfile` Links
 
   - [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/master/Dockerfile)
+  - [`6.9` (6.9/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.9/Dockerfile)
   - [`6.8` (6.8/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.8/Dockerfile)
-  - [`6.7` (6.7/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.7/Dockerfile)
 
 ## Overview
 
