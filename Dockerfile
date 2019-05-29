@@ -14,13 +14,11 @@
 
 FROM ubuntu:18.04
 
+ENV BAMBOO_VERSION               "6.8.1"
 ENV BAMBOO_OWNER                 "bamboo"
 ENV BAMBOO_GROUP                 "bamboo"
 ENV BAMBOO_HOME                  "/var/atlassian/application-data/bamboo"
 ENV BAMBOO_CATALINA              "/opt/atlassian/bamboo"
-ENV BAMBOO_DOWNLOAD_URL          "https://product-downloads.atlassian.com/software/bamboo/downloads/atlassian-bamboo-6.8.1.tar.gz"
-ENV BAMBOO_DOWNLOAD_DEST         "/tmp/atlassian-bamboo-6.8.1.tar.gz"
-ENV BAMBOO_DOWNLOAD_CHECKSUM     "sha1:aa261dc89cf881d5d62fdc34b3907bb38ef981c5"
 ENV JAVA_HOME                    "/usr/lib/jvm/java-8-openjdk-amd64"
 ENV JVM_MINIMUM_MEMORY           "512m"
 ENV JVM_MAXIMUM_MEMORY           "1024m"
