@@ -14,7 +14,7 @@
 
 FROM ubuntu:18.04
 
-ENV BAMBOO_VERSION               "6.9.0"
+ENV BAMBOO_VERSION               "6.9.1"
 ENV BAMBOO_OWNER                 "bamboo"
 ENV BAMBOO_GROUP                 "bamboo"
 ENV BAMBOO_HOME                  "/var/atlassian/application-data/bamboo"
