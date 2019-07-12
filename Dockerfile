@@ -63,6 +63,7 @@ RUN set -ex \
     && cd /etc/ansible/roles/localhost \
     && pip install --upgrade --requirement requirements.txt \
     && molecule test \
+    && rm -rf /var/cache/ansible/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache/* \
     && rm -rf /tmp/*
