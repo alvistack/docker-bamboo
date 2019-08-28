@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-## 6.9.2-0alvistack4 - 2019-08-28
+## 6.9.2-0alvistack4 - 2019-08-29
 
 ### Major Changes
 
