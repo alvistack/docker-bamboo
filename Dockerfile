@@ -14,12 +14,12 @@
 
 FROM ubuntu:18.04
 
+ENV JAVA_VERSION                 "1.8.0"
 ENV BAMBOO_VERSION               "6.9.2"
 ENV BAMBOO_OWNER                 "bamboo"
 ENV BAMBOO_GROUP                 "bamboo"
 ENV BAMBOO_HOME                  "/var/atlassian/application-data/bamboo"
 ENV BAMBOO_CATALINA              "/opt/atlassian/bamboo"
-ENV JAVA_HOME                    "/usr/lib/jvm/java-8-openjdk-amd64"
 ENV JVM_MINIMUM_MEMORY           "512m"
 ENV JVM_MAXIMUM_MEMORY           "1024m"
 ENV CATALINA_CONNECTOR_PROXYNAME ""
@@ -37,8 +37,8 @@ WORKDIR $BAMBOO_HOME
 EXPOSE 8007
 EXPOSE 8085
 
-ENTRYPOINT [ "dumb-init", "--" ]
-CMD        [ "docker-entrypoint.sh" ]
+ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
+CMD        [ "/opt/atlassian/bamboo/bin/start-bamboo.sh", "-fg" ]
 
 # Explicitly set system user UID/GID
 RUN set -ex \

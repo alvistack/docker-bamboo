@@ -1,8 +1,18 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-## 6.8.x-0alvistack1 - TBC
+## 6.9.x-0alvistack1 - TBC
 
 ### Major Changes
+
+## 6.9.2-0alvistack4 - 2019-08-29
+
+### Major Changes
+
+  - Simplify parameters combination with `JAVA_VERSION`
+  - Simplify parameters combination with `BAMBOO_VERSION`
+  - Ensure required folders exist with correct owner:group
+  - Prepend executable if command starts with an option
+  - Improve `ENTRYPOINT` and `CMD`
 
 ## 6.8.1-0alvistack6 - 2019-05-30
 
