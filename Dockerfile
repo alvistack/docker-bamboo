@@ -37,8 +37,8 @@ WORKDIR $BAMBOO_HOME
 EXPOSE 8007
 EXPOSE 8085
 
-ENTRYPOINT [ "dumb-init", "--" ]
-CMD        [ "docker-entrypoint.sh" ]
+ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
+CMD        [ "/opt/atlassian/bamboo/bin/start-bamboo.sh", "-fg" ]
 
 # Explicitly set system user UID/GID
 RUN set -ex \
