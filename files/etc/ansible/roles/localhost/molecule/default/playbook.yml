@@ -33,8 +33,6 @@
     - role: perforce
     - role: docker
     - role: java
-      package:
-        - { state: "latest", name: "openjdk-8-jdk" }
-      java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
+      java_version: "{{ lookup('env','JAVA_VERSION') }}"
     - role: bamboo
       bamboo_version: "{{ lookup('env','BAMBOO_VERSION') }}"

@@ -8,6 +8,7 @@
 
 ### Major Changes
 
+  - Simplify parameters combination with `JAVA_VERSION`
   - Simplify parameters combination with `BAMBOO_VERSION`
   - Ensure required folders exist with correct owner:group
   - Prepend executable if command starts with an option
