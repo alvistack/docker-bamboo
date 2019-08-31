@@ -4,15 +4,13 @@
 
 ### Major Changes
 
-  - Allow the container to be stated with `--user`
-
-## 6.9.2-0alvistack4 - 2019-08-29
+## 6.9.2-0alvistack6 - 2019-08-31
 
 ### Major Changes
 
-  - Simplify parameters combination with `JAVA_VERSION`
+  - Allow the container to be stated with `--user`
+  - Simplify parameters combination with `JAVA_RELEASE`
   - Simplify parameters combination with `BAMBOO_VERSION`
-  - Ensure required folders exist with correct owner:group
   - Prepend executable if command starts with an option
   - Improve `ENTRYPOINT` and `CMD`
 

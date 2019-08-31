@@ -14,7 +14,7 @@
 
 FROM ubuntu:18.04
 
-ENV JAVA_VERSION                 "1.8.0"
+ENV JAVA_RELEASE                 "1.8.x"
 ENV BAMBOO_VERSION               "6.9.2"
 ENV BAMBOO_OWNER                 "bamboo"
 ENV BAMBOO_GROUP                 "bamboo"
