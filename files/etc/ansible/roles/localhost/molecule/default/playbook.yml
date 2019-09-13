@@ -22,6 +22,7 @@
     - role: locales
     - role: timezone
     - role: dumb-init
+    - role: gosu
 
 - hosts: all
   remote_user: root
