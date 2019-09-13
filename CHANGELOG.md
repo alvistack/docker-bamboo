@@ -4,10 +4,6 @@
 
 ### Major Changes
 
-## 6.9.2-0alvistack6 - 2019-08-31
-
-### Major Changes
-
   - Allow the container to be stated with `--user`
   - Simplify parameters combination with `JAVA_RELEASE`
   - Simplify parameters combination with `BAMBOO_VERSION`
