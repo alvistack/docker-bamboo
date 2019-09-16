@@ -34,6 +34,6 @@
     - role: perforce
     - role: docker
     - role: java
-      java_release: "{{ lookup('env','JAVA_RELEASE') }}"
+      java_release: "8"
     - role: bamboo
       bamboo_version: "{{ lookup('env','BAMBOO_VERSION') }}"
