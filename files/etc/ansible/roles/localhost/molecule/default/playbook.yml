@@ -37,6 +37,10 @@
       java_release: "8"
     - role: bamboo
       bamboo_version: "{{ lookup('env','BAMBOO_VERSION') }}"
+      bamboo_owner: "{{ lookup('env','BAMBOO_OWNER') }}"
+      bamboo_group: "{{ lookup('env','BAMBOO_GROUP') }}"
+      bamboo_home: "{{ lookup('env','BAMBOO_HOME') }}"
+      bamboo_catalina: "{{ lookup('env','BAMBOO_CATALINA') }}"
       bamboo_jvm_minimum_memory: "{{ lookup('env', 'JVM_MINIMUM_MEMORY') }}"
       bamboo_jvm_maximum_memory: "{{ lookup('env', 'JVM_MAXIMUM_MEMORY') }}"
       bamboo_catalina_connector_proxyname: "{{ lookup('env', 'CATALINA_CONNECTOR_PROXYNAME') }}"
