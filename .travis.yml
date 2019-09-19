@@ -16,7 +16,8 @@ install:
   - git clone https://github.com/docker-library/official-images.git ~/.docker/official-images
 
 script:
-  - travis_wait 120 sudo ./scripts/run-tests.sh
+  - sudo docker build -t "$IMAGE" .
+  - sudo ~/.docker/official-images/test/run.sh "$IMAGE"
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
