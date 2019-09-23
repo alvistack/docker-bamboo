@@ -47,12 +47,12 @@ RUN set -ex \
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev make python python-dev sudo \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev make python3 python3-dev sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PIP
 RUN set -ex \
-    && curl -skL https://bootstrap.pypa.io/get-pip.py | python
+    && curl -skL https://bootstrap.pypa.io/get-pip.py | python3
 
 # Copy files
 COPY files /
@@ -60,7 +60,7 @@ COPY files /
 # Bootstrap with Ansible
 RUN set -ex \
     && cd /etc/ansible/roles/localhost \
-    && pip install --upgrade --requirement requirements.txt \
+    && pip3 install --upgrade --requirement requirements.txt \
     && molecule dependency \
     && molecule lint \
     && molecule syntax \
