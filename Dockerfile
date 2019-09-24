@@ -32,7 +32,7 @@ ENV CATALINA_CONNECTOR_SCHEME    "http"
 ENV CATALINA_CONNECTOR_SECURE    "false"
 ENV CATALINA_CONTEXT_PATH        "/"
 ENV JVM_SUPPORT_RECOMMENDED_ARGS "-Datlassian.plugins.enable.wait=300 -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
-ENV SESSION_TIMEOUT              "30"
+ENV SESSION_TIMEOUT              "300"
 
 VOLUME  $BAMBOO_HOME
 WORKDIR $BAMBOO_HOME
