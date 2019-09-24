@@ -14,6 +14,11 @@
 
 FROM ubuntu:18.04
 
+ENV LANG   "C.UTF-8"
+ENV LC_ALL "C.UTF-8"
+ENV SHELL  "/bin/bash"
+ENV TZ     "UTC"
+
 ENV BAMBOO_VERSION               "6.10.2"
 ENV BAMBOO_OWNER                 "bamboo"
 ENV BAMBOO_GROUP                 "bamboo"
