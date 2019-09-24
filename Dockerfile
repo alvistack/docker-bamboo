@@ -14,8 +14,8 @@
 
 FROM ubuntu:18.04
 
-ENV LANG   "C.UTF-8"
-ENV LC_ALL "C.UTF-8"
+ENV LANG   "en_US.utf8"
+ENV LC_ALL "en_US.utf8"
 ENV SHELL  "/bin/bash"
 ENV TZ     "UTC"
 
@@ -43,6 +43,13 @@ EXPOSE 8085
 
 ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
 CMD        [ "/opt/atlassian/bamboo/bin/start-bamboo.sh", "-fg" ]
+
+# Hotfix for en_US.utf8 locale
+RUN set -ex \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install locales \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Explicitly set system user UID/GID
 RUN set -ex \
@@ -72,6 +79,6 @@ RUN set -ex \
     && molecule converge \
     && molecule verify \
     && rm -rf /var/cache/ansible/* \
-    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cache/* \
-    && rm -rf /tmp/*
+    && rm -rf /tmp/* \
+    && rm -rf /var/lib/apt/lists/*
