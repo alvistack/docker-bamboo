@@ -71,7 +71,7 @@ COPY files /
 # Bootstrap with Ansible
 RUN set -ex \
     && cd /etc/ansible/roles/localhost \
-    && pip3 install --upgrade --requirement requirements.txt \
+    && pip3 install --upgrade --ignore-installed --requirement requirements.txt \
     && molecule dependency \
     && molecule lint \
     && molecule syntax \
