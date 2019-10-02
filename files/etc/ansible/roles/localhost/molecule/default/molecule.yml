@@ -38,6 +38,10 @@ provisioner:
     ANSIBLE_ROLES_PATH: /etc/ansible/roles
   lint:
     name: ansible-lint
+  playbooks:
+    create: create.yml
+    prepare: prepare.yml
+    destroy: destroy.yml
 verifier:
   name: testinfra
   lint:
