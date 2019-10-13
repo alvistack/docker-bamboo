@@ -58,7 +58,7 @@ RUN set -ex \
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev make python3 python3-dev sudo \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev lsb-release make python3 python3-dev sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PIP
