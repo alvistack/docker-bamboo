@@ -1,6 +1,6 @@
 ---
 
-dist: xenial
+dist: bionic
 
 language: minimal
 
@@ -17,7 +17,11 @@ install:
 
 script:
   - sudo docker build -t "$IMAGE" .
-  - sudo ~/.docker/official-images/test/run.sh "$IMAGE"
+  - |
+    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t utc
+    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t cve-2014--shellshock
+    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t no-hard-coded-passwords
+    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t override-cmd
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
