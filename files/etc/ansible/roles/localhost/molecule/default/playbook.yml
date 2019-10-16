@@ -18,9 +18,10 @@
   remote_user: root
   roles:
     - role: bootstrap
-    - role: python
     - role: locales
     - role: timezone
+    - role: python
+    - role: ansible
     - role: dumb-init
     - role: gosu
 
