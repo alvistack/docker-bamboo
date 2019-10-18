@@ -33,6 +33,7 @@ ENV CATALINA_CONNECTOR_SECURE    "false"
 ENV CATALINA_CONTEXT_PATH        "/"
 ENV JVM_SUPPORT_RECOMMENDED_ARGS "-Datlassian.plugins.enable.wait=300 -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
 ENV SESSION_TIMEOUT              "300"
+ENV PATH                         "$PATH:$BAMBOO_CATALINA/bin"
 
 VOLUME  $BAMBOO_HOME
 WORKDIR $BAMBOO_HOME
@@ -41,7 +42,7 @@ EXPOSE 8007
 EXPOSE 8085
 
 ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
-CMD        [ "/opt/atlassian/bamboo/bin/start-bamboo.sh", "-fg" ]
+CMD        [ "start-bamboo.sh", "-fg" ]
 
 # Hotfix for en_US.utf8 locale
 RUN set -ex \
