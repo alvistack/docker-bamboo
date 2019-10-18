@@ -50,3 +50,4 @@
       bamboo_catalina_connector_secure: "{{ lookup('env', 'CATALINA_CONNECTOR_SECURE') }}"
       bamboo_catalina_context_path: "{{ lookup('env', 'CATALINA_CONTEXT_PATH') }}"
       bamboo_jvm_support_recommended_args: "{{ lookup('env', 'JVM_SUPPORT_RECOMMENDED_ARGS') }}"
+    - role: localhost
