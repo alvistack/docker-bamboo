@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alvistack/ubuntu:18.04-slim
+FROM ubuntu:18.04
 
 ENV LANG   "en_US.utf8"
 ENV LC_ALL "en_US.utf8"
@@ -65,10 +65,6 @@ RUN set -ex \
 # Install PIP
 RUN set -ex \
     && curl -skL https://bootstrap.pypa.io/get-pip.py | python3
-
-# Purge /etc/ansible
-RUN set -ex \
-    && rm -rf /etc/ansible
 
 # Copy files
 COPY files /
