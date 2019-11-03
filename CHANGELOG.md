@@ -4,6 +4,7 @@
 
 ### Major Changes
 
+  - Upgrade minimal Ansible support to 2.9.0
   - Default with Python 3
   - Allow the container to be stated with `--user`
   - Simplify parameters combination with `JAVA_RELEASE`
