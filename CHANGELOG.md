@@ -1,13 +1,18 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-## 6.9.x-0alvistack1 - TBC
+## 6.10.3-XalvistackY - TBC
+
+### Major Changes
+
+## 6.10.3-2alvistack3 - 2019-11-05
 
 ### Major Changes
 
   - Upgrade minimal Ansible support to 2.9.0
+  - Upgrade Travis CI test as Ubuntu Bionic based
   - Default with Python 3
+  - Hotfix for en\_US.utf8 locale
   - Allow the container to be stated with `--user`
-  - Simplify parameters combination with `JAVA_RELEASE`
   - Simplify parameters combination with `BAMBOO_VERSION`
   - Prepend executable if command starts with an option
   - Improve `ENTRYPOINT` and `CMD`
