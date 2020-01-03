@@ -19,6 +19,7 @@ ENV LC_ALL "en_US.utf8"
 ENV SHELL  "/bin/bash"
 ENV TZ     "UTC"
 
+ENV JAVA_RELEASE                 "8"
 ENV BAMBOO_VERSION               "6.10.4"
 ENV BAMBOO_OWNER                 "bamboo"
 ENV BAMBOO_GROUP                 "bamboo"
