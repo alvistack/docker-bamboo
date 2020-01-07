@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-java_release: "{{ lookup('env', 'JAVA_RELEASE') }}"
+openjdk_release: "{{ lookup('env', 'OPENJDK_RELEASE') }}"
 bamboo_version: "{{ lookup('env','BAMBOO_VERSION') }}"
 bamboo_owner: "{{ lookup('env','BAMBOO_OWNER') }}"
 bamboo_group: "{{ lookup('env','BAMBOO_GROUP') }}"
