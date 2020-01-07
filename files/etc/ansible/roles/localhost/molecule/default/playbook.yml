@@ -34,6 +34,6 @@
     - role: mercurial
     - role: perforce
     - role: docker
-    - role: java
+    - role: openjdk
     - role: bamboo
     - role: localhost

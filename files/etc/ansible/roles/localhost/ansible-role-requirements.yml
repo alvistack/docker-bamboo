@@ -53,8 +53,8 @@
 - name: docker
   src: https://github.com/alvistack/ansible-role-docker/archive/master.tar.gz
 
-- name: java
-  src: https://github.com/alvistack/ansible-role-java/archive/master.tar.gz
+- name: openjdk
+  src: https://github.com/alvistack/ansible-role-openjdk/archive/master.tar.gz
 
 - name: bamboo
   src: https://github.com/alvistack/ansible-role-bamboo/archive/master.tar.gz
