@@ -1,8 +1,16 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-## 6.10.3-XalvistackY - TBC
+## 6.10.4-XalvistackY - TBC
 
 ### Major Changes
+
+## 6.10.4-3alvistack1 - TBC
+
+### Major Changes
+
+  - Replace `dumb-init` with `tini`, as like as `docker --init`
+  - Replace `java` with `openjdk`
+  - Include release specific vars and tasks
 
 ## 6.10.3-2alvistack3 - 2019-11-05
 
