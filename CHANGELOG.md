@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-## 6.10.4-3alvistack1 - TBC
+## 6.10.4-3alvistack1 - 2020-01-15
 
 ### Major Changes
 
