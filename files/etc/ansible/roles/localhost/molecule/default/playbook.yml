@@ -22,7 +22,7 @@
     - role: timezone
     - role: python
     - role: ansible
-    - role: dumb-init
+    - role: tini
     - role: gosu
 
 - hosts: all

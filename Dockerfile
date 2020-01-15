@@ -42,7 +42,7 @@ WORKDIR $BAMBOO_HOME
 EXPOSE 8007
 EXPOSE 8085
 
-ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
+ENTRYPOINT [ "tini", "-g", "--", "docker-entrypoint.sh" ]
 CMD        [ "start-bamboo.sh", "-fg" ]
 
 # Hotfix for en_US.utf8 locale
