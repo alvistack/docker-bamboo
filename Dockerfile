@@ -48,7 +48,7 @@ CMD        [ "start-bamboo.sh", "-fg" ]
 # Hotfix for en_US.utf8 locale
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install locales \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y locales \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -60,7 +60,7 @@ RUN set -ex \
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev lsb-release make python3 python3-dev sudo \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc iproute2 python3 python3-dev sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PIP
