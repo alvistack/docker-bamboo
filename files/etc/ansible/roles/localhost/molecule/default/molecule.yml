@@ -34,11 +34,20 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_ROLES_PATH: /etc/ansible/roles
+  config_options:
+    defaults:
+      forks: 20
+    ssh_connection:
+      pipelining: true
+      ssh_args: -o ControlMaster=auto -o ControlPersist=600s
   lint:
     name: ansible-lint
+  inventory:
+    links:
+      group_vars: group_vars
   playbooks:
     prepare: prepare.yml
 verifier:
-  name: testinfra
+  name: ansible
   lint:
-    name: flake8
+    name: ansible-lint
