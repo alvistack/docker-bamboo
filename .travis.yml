@@ -1,31 +1,33 @@
 ---
 
+os: linux
+
 dist: bionic
 
-language: minimal
+language: shell
 
 services: docker
 
 before_install:
-  - docker version
-  - docker info
+  - |
+    mkdir -p $HOME/.docker
+    git clone https://github.com/docker-library/official-images.git $HOME/.docker/official-images
 
 install:
-  - export IMAGE=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
-  - mkdir -p ~/.docker
-  - git clone https://github.com/docker-library/official-images.git ~/.docker/official-images
+  - |
+    export IMAGE=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
 
 script:
-  - sudo docker build -t "$IMAGE" .
   - |
-    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t utc
-    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t cve-2014--shellshock
-    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t no-hard-coded-passwords
-    sudo ~/.docker/official-images/test/run.sh "$IMAGE" -t override-cmd
+    sudo docker build -t "$IMAGE" .
+    sudo $HOME/.docker/official-images/test/run.sh "$IMAGE" -t utc
+    sudo $HOME/.docker/official-images/test/run.sh "$IMAGE" -t cve-2014--shellshock
+    sudo $HOME/.docker/official-images/test/run.sh "$IMAGE" -t no-hard-coded-passwords
+    sudo $HOME/.docker/official-images/test/run.sh "$IMAGE" -t override-cmd
 
 after_success:
-  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - |
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     if [[ -n "$TRAVIS_TAG" ]]; then
       docker tag "$IMAGE" "$IMAGE":"$TRAVIS_TAG"
       docker push "$IMAGE":"$TRAVIS_TAG"
