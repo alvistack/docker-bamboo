@@ -11,13 +11,18 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective `Dockerfile` Links
 
-  - [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/master/Dockerfile)
-  - [`6.10` (6.10/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.10/Dockerfile)
-  - [`6.9` (6.9/Dockerfile)](https://github.com/alvistack/docker-bamboo/blob/6.9/Dockerfile)
+  - [`6.10`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/6.10/Dockerfile.j2)
+  - [`6.9`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/6.9/Dockerfile.j2)
 
 ## Overview
 
 This Docker container makes it easy to get an instance of Bamboo up and running.
+
+Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
+
+  - Minimized `Dockerfile` for meta data definition
+  - Provision by Ansible and Molecule Docker driver in single layer
+  - Handle `ENTRYPOINT` with [tini](https://github.com/krallin/tini)
 
 ### Quick Start
 

@@ -1,0 +1,52 @@
+[submodule "roles/bamboo"]
+	path = roles/bamboo
+	url = https://github.com/alvistack/ansible-role-bamboo.git
+	branch = develop
+[submodule "roles/bootstrap"]
+	path = roles/bootstrap
+	url = https://github.com/alvistack/ansible-role-bootstrap.git
+	branch = develop
+[submodule "roles/cvs"]
+	path = roles/cvs
+	url = https://github.com/alvistack/ansible-role-cvs.git
+	branch = develop
+[submodule "roles/git"]
+	path = roles/git
+	url = https://github.com/alvistack/ansible-role-git.git
+	branch = develop
+[submodule "roles/gosu"]
+	path = roles/gosu
+	url = https://github.com/alvistack/ansible-role-gosu.git
+	branch = develop
+[submodule "roles/locales"]
+	path = roles/locales
+	url = https://github.com/alvistack/ansible-role-locales.git
+	branch = develop
+[submodule "roles/mercurial"]
+	path = roles/mercurial
+	url = https://github.com/alvistack/ansible-role-mercurial.git
+	branch = develop
+[submodule "roles/openjdk"]
+	path = roles/openjdk
+	url = https://github.com/alvistack/ansible-role-openjdk.git
+	branch = develop
+[submodule "roles/perforce"]
+	path = roles/perforce
+	url = https://github.com/alvistack/ansible-role-perforce.git
+	branch = develop
+[submodule "roles/python"]
+	path = roles/python
+	url = https://github.com/alvistack/ansible-role-python.git
+	branch = develop
+[submodule "roles/svn"]
+	path = roles/svn
+	url = https://github.com/alvistack/ansible-role-svn.git
+	branch = develop
+[submodule "roles/timezone"]
+	path = roles/timezone
+	url = https://github.com/alvistack/ansible-role-timezone.git
+	branch = develop
+[submodule "roles/tini"]
+	path = roles/tini
+	url = https://github.com/alvistack/ansible-role-tini.git
+	branch = develop
