@@ -35,7 +35,7 @@ script:
 
 after_success:
   - |
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
     export IMAGE=$(docker images | awk '{print $3}' | awk 'NR==2')
     export REPO=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
     if [[ -n "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ ^$MOLECULE_SCENARIO_NAME ]]; then
