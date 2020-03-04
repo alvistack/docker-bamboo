@@ -4,7 +4,12 @@
 
 ### Major Changes
 
+## 6.10.4-4alvistack1 - 2020-03-04
+
+### Major Changes
+
   - Revamp with Molecule and `docker commit`
+  - Hotfix for systemd
 
 ## 6.10.4-3alvistack1 - 2020-01-15
 
