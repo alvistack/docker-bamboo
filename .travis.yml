@@ -38,12 +38,12 @@ after_success:
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     export IMAGE=$(docker images | awk '{print $3}' | awk 'NR==2')
     export REPO=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
-    if [[ -n "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ [^\$MOLECULE_SCENARIO_NAME] ]]; then
+    if [[ -n "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ ^$MOLECULE_SCENARIO_NAME ]]; then
       docker tag "$IMAGE" "$REPO":"$TRAVIS_TAG"
       docker push "$REPO":"$TRAVIS_TAG"
       docker tag "$IMAGE" "$REPO":latest
       docker push "$REPO":latest
-    elif [[ "$TRAVIS_BRANCH" =~ [^master$] ]]; then
+    elif [[ "$TRAVIS_BRANCH" =~ master ]]; then
       docker tag "$IMAGE" "$REPO":"$MOLECULE_SCENARIO_NAME"
       docker push "$REPO":"$MOLECULE_SCENARIO_NAME"
     fi
