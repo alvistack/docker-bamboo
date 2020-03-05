@@ -14,21 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-namespace: alvistack
-name: docker-bamboo
-description: Docker Image Packaging for Atlassian Bamboo
-
-version: VERSION
-readme: README.md
-license: Apache-2.0
-
-repository: https://github.com/alvistack/docker-bamboo
-documentation: https://github.com/alvistack/docker-bamboo
-homepage: https://github.com/alvistack/docker-bamboo
-issues: https://github.com/alvistack/docker-bamboo/issues
-
-dependencies: {}
-tags:
-  - system
-authors:
-  - Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+bamboo_version: "6.10.4"
