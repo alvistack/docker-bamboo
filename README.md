@@ -186,9 +186,13 @@ For evaluations you can use the built-in database that will store its files in t
 
 ## Versioning
 
+### `alvistack/bamboo:latest`
+
 The `latest` tag matches the most recent [GitHub Release](https://github.com/alvistack/docker-bamboo/releases) of this repository. Thus using `alvistack/bamboo:latest` or `alvistack/bamboo` will ensure you are running the most up to date stable version of this image.
 
-Other tags are rolling release rebuild by [Travis](https://travis-ci.org/alvistack/docker-bamboo) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
+### `alvistack/bamboo:<version>`
+
+The version tags are rolling release rebuild by [Travis](https://travis-ci.org/alvistack/docker-bamboo) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
 
 ## License
 
