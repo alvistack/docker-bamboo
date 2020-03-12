@@ -20,7 +20,7 @@ platforms:
   - name: ${MOLECULE_INSTANCE_NAME}-1
     dockerfile: Dockerfile.j2
 lint: |
-  set -e
+  set -ex
   yamllint .
   ansible-lint
   flake8
