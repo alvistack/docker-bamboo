@@ -15,7 +15,7 @@
 # limitations under the License.
 
 openjdk_release: "8"
-bamboo_version: "6.10.4"
+bamboo_version: "7.0.1"
 bamboo_owner: "bamboo"
 bamboo_group: "bamboo"
 bamboo_home: "/var/atlassian/application-data/bamboo"
