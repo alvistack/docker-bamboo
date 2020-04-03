@@ -1,6 +1,6 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-[![Travis](https://img.shields.io/travis/alvistack/docker-bamboo.svg)](https://travis-ci.org/alvistack/docker-bamboo)
+[![Travis](https://img.shields.io/travis/com/alvistack/docker-bamboo.svg)](https://travis-ci.com/alvistack/docker-bamboo)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo.svg)](https://hub.docker.com/r/alvistack/bamboo/)
@@ -192,7 +192,7 @@ The `latest` tag matches the most recent [GitHub Release](https://github.com/alv
 
 ### `alvistack/bamboo:<version>`
 
-The version tags are rolling release rebuild by [Travis](https://travis-ci.org/alvistack/docker-bamboo) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
+The version tags are rolling release rebuild by [Travis](https://travis-ci.com/alvistack/docker-bamboo) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
 
 ## License
 
