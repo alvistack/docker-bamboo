@@ -62,6 +62,7 @@
     - name: docker run
       docker_container:
         name: "{{ item.name }}"
+        hostname: "{{ item.name }}"
         image: "{{ molecule_ephemeral_directory | regex_replace('^.*/([^/]*/[^/]*)$', '\\1') }}:{{ item.name }}"
         entrypoint: "{{ item.entrypoint | default('') }}"
         command: "{{ item.command | default('bash -c \"sleep infinity\"') }}"
