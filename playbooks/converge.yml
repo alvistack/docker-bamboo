@@ -17,7 +17,66 @@
 - hosts: all
   remote_user: root
   tasks:
-    - include_tasks: "./tasks/pre_tasks.yml"
+    - name: include default variables
+      include_vars: "./vars/main.yml"
+
+    - name: include release specific variables
+      include_vars: "{{ lookup('first_found', _params) }}"
+      vars:
+        _params:
+          files:
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}.yml"
+          paths:
+            - "./vars"
+      ignore_errors: true
+
+    - name: include release specific tasks
+      include_tasks: "{{ lookup('first_found', _params) }}"
+      vars:
+        _params:
+          files:
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}.yml"
+          paths:
+            - "./tasks"
+      ignore_errors: true
+
+    - name: prepare directories
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0755') }}"
+        state: "{{ item.state | default('directory') }}"
+      loop:
+        - { dest: "/usr/local/bin" }
+
+    - name: copy templates
+      template:
+        dest: "{{ item.dest }}"
+        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+      loop:
+        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+
+    - name: prepare files
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+        state: "{{ item.state | default('file') }}"
+      loop:
+        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
     - include_role:
         name: bootstrap
@@ -57,5 +116,3 @@
 
     - include_role:
         name: bamboo
-
-    - include_tasks: "./tasks/post_tasks.yml"
