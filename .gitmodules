@@ -2,10 +2,6 @@
 	path = roles/bamboo
 	url = https://github.com/alvistack/ansible-role-bamboo.git
 	branch = develop
-[submodule "roles/bootstrap"]
-	path = roles/bootstrap
-	url = https://github.com/alvistack/ansible-role-bootstrap.git
-	branch = develop
 [submodule "roles/cvs"]
 	path = roles/cvs
 	url = https://github.com/alvistack/ansible-role-cvs.git
