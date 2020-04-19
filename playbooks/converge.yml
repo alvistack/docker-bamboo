@@ -79,9 +79,6 @@
         - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
     - include_role:
-        name: bootstrap
-
-    - include_role:
         name: python
 
     - include_role:
