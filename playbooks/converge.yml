@@ -109,6 +109,27 @@
         name: perforce
 
     - include_role:
+        name: cni_plugins
+
+    - include_role:
+        name: containers_common
+
+    - include_role:
+        name: crun
+
+    - include_role:
+        name: conmon
+
+    - include_role:
+        name: skopeo
+
+    - include_role:
+        name: buildah
+
+    - include_role:
+        name: podman
+
+    - include_role:
         name: openjdk
 
     - include_role:
