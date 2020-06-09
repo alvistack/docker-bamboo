@@ -63,7 +63,7 @@ WORKDIR $BAMBOO_HOME
 EXPOSE 8007
 EXPOSE 8085
 
-ENTRYPOINT [ "tini", "-g", "--", "docker-entrypoint.sh" ]
+ENTRYPOINT [ "catatonit", "-g", "--", "docker-entrypoint.sh" ]
 CMD        [ "start-bamboo.sh", "-fg" ]
 
 # Explicitly set system user UID/GID
