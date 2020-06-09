@@ -6,6 +6,10 @@
 	path = roles/buildah
 	url = https://github.com/alvistack/ansible-role-buildah.git
 	branch = develop
+[submodule "roles/catatonit"]
+	path = roles/catatonit
+	url = https://github.com/alvistack/ansible-role-catatonit.git
+	branch = develop
 [submodule "roles/cni_plugins"]
 	path = roles/cni_plugins
 	url = https://github.com/alvistack/ansible-role-cni_plugins.git
@@ -69,8 +73,4 @@
 [submodule "roles/timezone"]
 	path = roles/timezone
 	url = https://github.com/alvistack/ansible-role-timezone.git
-	branch = develop
-[submodule "roles/tini"]
-	path = roles/tini
-	url = https://github.com/alvistack/ansible-role-tini.git
 	branch = develop
