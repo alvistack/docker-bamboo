@@ -1,9 +1,14 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-## 7.0.2-XalvistackY - TBC
+## 7.0.4-XalvistackY - TBC
 
 ### Major Changes
 
+## 7.0.4-4alvistack4 - 2020-06-10
+
+### Major Changes
+
+  - Revamp `create`, `side_effect`, `verify` and `destroy` logic
   - Replace `tini` with `catatonit`
   - Add podman support
   - Rename `post_tasks.yml` as `side_effect.yml`
