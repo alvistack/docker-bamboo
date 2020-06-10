@@ -4,6 +4,7 @@
 
 ### Major Changes
 
+  - Revamp `create`, `side_effect`, `verify` and `destroy` logic
   - Replace `tini` with `catatonit`
   - Add podman support
   - Rename `post_tasks.yml` as `side_effect.yml`
