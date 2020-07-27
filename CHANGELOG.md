@@ -1,6 +1,6 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-## 7.0.4-XalvistackY - TBC
+## 7.1.1-XalvistackY - TBC
 
 ### Major Changes
 

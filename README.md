@@ -11,8 +11,8 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective `Dockerfile` Links
 
-  - [`7.0`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/7.0/Dockerfile.j2)
-  - [`6.10`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/6.10/Dockerfile.j2)
+  - [`7.1`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/7.1/Dockerfile.j2)
+  - [`7.0`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/7.0/Dockerfile.j2)
 
 ## Overview
 
