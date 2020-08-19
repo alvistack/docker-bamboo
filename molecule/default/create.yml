@@ -24,6 +24,7 @@
       template:
         src: "{{ molecule_scenario_directory }}/{{ item.dockerfile }}"
         dest: "{{ molecule_ephemeral_directory }}/Dockerfile-{{ item.name }}"
+        mode: "0644"
       loop_control:
         label: "{{ item.name }}"
       loop: "{{ molecule_yml.platforms }}"
