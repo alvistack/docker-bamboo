@@ -37,6 +37,7 @@
         build:
           path: "{{ molecule_ephemeral_directory }}"
           dockerfile: "{{ molecule_ephemeral_directory }}/Dockerfile-{{ item.name }}"
+          pull: true
       loop_control:
         label: "{{ item.name }}"
       loop: "{{ molecule_yml.platforms }}"
@@ -71,6 +72,7 @@
         tty: "{{ item.tty | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
         env: "{{ item.env | default(omit) }}"
+        container_default_behavior: "no_defaults"
         state: "started"
       loop_control:
         label: "{{ item.name }}"
