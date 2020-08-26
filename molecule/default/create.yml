@@ -20,10 +20,20 @@
   become: true
   gather_facts: false
   tasks:
+    - name: prepare directories
+      file:
+        dest: "{{ molecule_ephemeral_directory }}/{{ item.name }}"
+        mode: "0755"
+        state: "directory"
+      loop_control:
+        label: "{{ item.name }}"
+      loop: "{{ molecule_yml.platforms }}"
+      when: item.dockerfile is defined
+
     - name: copy template
       template:
         src: "{{ molecule_scenario_directory }}/{{ item.dockerfile }}"
-        dest: "{{ molecule_ephemeral_directory }}/Dockerfile-{{ item.name }}"
+        dest: "{{ molecule_ephemeral_directory }}/{{ item.name }}/Dockerfile"
         mode: "0644"
       loop_control:
         label: "{{ item.name }}"
@@ -35,8 +45,8 @@
         name: "{{ molecule_ephemeral_directory | regex_replace('^.*/([^/]*/[^/]*)$', '\\1') }}:{{ item.name }}"
         source: "build"
         build:
-          path: "{{ molecule_ephemeral_directory }}"
-          dockerfile: "{{ molecule_ephemeral_directory }}/Dockerfile-{{ item.name }}"
+          path: "{{ molecule_ephemeral_directory }}/{{ item.name }}"
+          pull: true
       loop_control:
         label: "{{ item.name }}"
       loop: "{{ molecule_yml.platforms }}"
@@ -71,6 +81,7 @@
         tty: "{{ item.tty | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
         env: "{{ item.env | default(omit) }}"
+        container_default_behavior: "no_defaults"
         state: "started"
       loop_control:
         label: "{{ item.name }}"

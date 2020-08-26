@@ -47,6 +47,7 @@
     - name: docker rm
       docker_container:
         name: "{{ item.name }}"
+        container_default_behavior: "no_defaults"
         state: "absent"
       loop_control:
         label: "{{ item.name }}"
