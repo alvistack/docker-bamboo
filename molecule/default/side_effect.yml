@@ -15,3 +15,39 @@
 # limitations under the License.
 
 - import_playbook: ../../playbooks/side_effect.yml
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: rm -rf /root/.ansible/tmp/*
+      raw: |
+        set -ex
+        rm -rf /root/.ansible/tmp/*
+        rm -rf /root/.cache/*
+        rm -rf /tmp/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: debian | apt-get clean
+      raw: |
+        set -ex
+        apt-get clean
+        rm -rf /var/lib/apt/lists/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: redhat | yum clean all
+      raw: |
+        set -ex
+        yum clean all
+        rm -rf /var/cache/yum/*
+      changed_when: false
+      ignore_errors: true
+
+    - name: suse | zypper clean --all
+      raw: |
+        set -ex
+        zypper clean --all
+        rm -rf /var/cache/zypper/*
+      changed_when: false
+      ignore_errors: true
