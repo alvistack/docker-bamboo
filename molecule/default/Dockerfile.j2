@@ -14,8 +14,15 @@
 
 FROM ubuntu:20.04
 
-ENV LANG   "en_US.utf8"
-ENV LC_ALL "en_US.utf8"
+# Hotfix for en_US.UTF-8 locale
+RUN set -ex \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y language-pack-en locales \
+    && localedef -i en_US -c -f UTF-8 en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV LANG   "en_US.UTF-8"
+ENV LC_ALL "en_US.UTF-8"
 ENV SHELL  "/bin/bash"
 ENV TZ     "UTC"
 
@@ -24,18 +31,11 @@ RUN set -ex \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y systemd \
     && ln -fs /lib/systemd/systemd /usr/sbin/init \
-    && find /lib/systemd/system/sysinit.target.wants/ -name "systemd-tmpfiles-setup.service" -delete \
-    && rm -f /lib/systemd/system/multi-user.target.wants/* \
     && rm -f /etc/systemd/system/*.wants/* \
-    && rm -f /lib/systemd/system/local-fs.target.wants/* \
-    && rm -f /lib/systemd/system/sockets.target.wants/*udev* \
-    && rm -f /lib/systemd/system/sockets.target.wants/*initctl* \
     && rm -f /lib/systemd/system/basic.target.wants/* \
-    && rm -rf /var/lib/apt/lists/*
-
-# Hotfix for en_US.utf8 locale
-RUN set -ex \
-    && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y locales \
-    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && rm -f /lib/systemd/system/local-fs.target.wants/* \
+    && rm -f /lib/systemd/system/multi-user.target.wants/* \
+    && rm -f /lib/systemd/system/sockets.target.wants/*initctl* \
+    && rm -f /lib/systemd/system/sockets.target.wants/*udev* \
+    && rm -f /lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup.service \
     && rm -rf /var/lib/apt/lists/*
