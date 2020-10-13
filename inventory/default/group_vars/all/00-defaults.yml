@@ -22,8 +22,8 @@ bamboo_owner: "bamboo"
 bamboo_group: "bamboo"
 bamboo_home: "/var/atlassian/application-data/bamboo"
 bamboo_catalina: "/opt/atlassian/bamboo"
-bamboo_jvm_minimum_memory: "1024m"
-bamboo_jvm_maximum_memory: "1024m"
+bamboo_jvm_minimum_memory: "2048m"
+bamboo_jvm_maximum_memory: "2048m"
 bamboo_catalina_connector_proxyname: ~
 bamboo_catalina_connector_proxyport: ~
 bamboo_catalina_connector_scheme: "http"
