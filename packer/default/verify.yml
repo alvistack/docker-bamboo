@@ -14,17 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- hosts: localhost
-  connection: local
-  remote_user: root
-  become: true
-  gather_facts: false
-  tasks:
-    - name: docker rm
-      docker_container:
-        name: "{{ item.name }}"
-        container_default_behavior: "no_defaults"
-        state: "absent"
-      loop_control:
-        label: "{{ item.name }}"
-      loop: "{{ molecule_yml.platforms }}"
+- import_playbook: ../../playbooks/verify.yml
