@@ -6,18 +6,33 @@ dist: focal
 
 language: shell
 
-services:
-  - docker
-
 env:
   jobs:
-    - MOLECULE_SCENARIO_NAME="7.1"
-    - MOLECULE_SCENARIO_NAME="7.0"
+    - PACKER_BUILDER_NAME="7.1"
+    - PACKER_BUILDER_NAME="7.0"
 
 before_install:
   - |
-    sudo apt-get -y purge python3-openssl && sudo apt-get -y autoremove
-    sudo apt-get update && sudo apt-get install -y ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
+    curl -skL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+    sudo systemctl start docker.service
+
+  - |
+    curl -Os https://releases.hashicorp.com/packer/1.6.4/packer_1.6.4_linux_amd64.zip
+    curl -Os https://releases.hashicorp.com/packer/1.6.4/packer_1.6.4_SHA256SUMS
+    curl -Os https://releases.hashicorp.com/packer/1.6.4/packer_1.6.4_SHA256SUMS.sig
+    curl -skL https://keybase.io/hashicorp/pgp_keys.asc | sudo gpg --import
+    gpg --verify packer_1.6.4_SHA256SUMS.sig packer_1.6.4_SHA256SUMS
+    sha256sum -c packer_1.6.4_SHA256SUMS 2>&1 | grep OK
+    sudo unzip -qq -o -d /usr/local/bin packer_1.6.4_linux_amd64.zip
+    rm -rf packer_1.6.4_*
+
+  - |
+    sudo apt-get update
+    sudo apt-get -y purge python3-openssl
+    sudo apt-get -y install ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
     curl -skL https://bootstrap.pypa.io/get-pip.py | sudo -H python3 - --prefix=/usr/local
     sudo -H pip3 install --prefix=/usr/local --upgrade --ignore-installed --requirement requirements.txt
 
@@ -29,25 +44,25 @@ install:
 
 script:
   - |
-    source ./scripts/run-tests.sh \
-      && sudo -E molecule dependency -s $MOLECULE_SCENARIO_NAME \
-      && sudo -E molecule lint -s $MOLECULE_SCENARIO_NAME \
-      && sudo -E molecule syntax -s $MOLECULE_SCENARIO_NAME \
-      && sudo -E molecule converge -s $MOLECULE_SCENARIO_NAME \
-      && sudo -E molecule side-effect -s $MOLECULE_SCENARIO_NAME \
-      && sudo -E molecule verify -s $MOLECULE_SCENARIO_NAME
+    yamllint .
+    ansible-lint
+    flake8
+
+  - |
+    cd packer/$PACKER_BUILDER_NAME
+    packer build packer.json
 
 after_success:
   - |
     echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
     export IMAGE=$(docker images | awk '{print $3}' | awk 'NR==2')
     export REPO=$(echo $TRAVIS_REPO_SLUG | sed 's/\/docker-/\//g')
-    if [[ -n "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ ^$MOLECULE_SCENARIO_NAME ]]; then
+    if [[ -n "$TRAVIS_TAG" ]] && [[ "$TRAVIS_TAG" =~ ^$PACKER_BUILDER_NAME ]]; then
       docker tag "$IMAGE" "$REPO":"$TRAVIS_TAG"
       docker push "$REPO":"$TRAVIS_TAG"
       docker tag "$IMAGE" "$REPO":latest
       docker push "$REPO":latest
     elif [[ "$TRAVIS_BRANCH" =~ master ]]; then
-      docker tag "$IMAGE" "$REPO":"$MOLECULE_SCENARIO_NAME"
-      docker push "$REPO":"$MOLECULE_SCENARIO_NAME"
+      docker tag "$IMAGE" "$REPO":"$PACKER_BUILDER_NAME"
+      docker push "$REPO":"$PACKER_BUILDER_NAME"
     fi

@@ -9,10 +9,10 @@ Bamboo is a continuous integration (CI) server that can be used to automate the 
 
 Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
-## Supported Tags and Respective `Dockerfile` Links
+## Supported Tags and Respective Packer Template Links
 
-  - [`7.1`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/7.1/Dockerfile.j2)
-  - [`7.0`](https://github.com/alvistack/docker-bamboo/blob/master/molecule/7.0/Dockerfile.j2)
+  - [`7.1`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/packer/7.1/packer.json)
+  - [`7.0`](https://github.com/alvistack/docker-bamboo/blob/master/packer/7.0/packer.json)
 
 ## Overview
 
@@ -20,8 +20,7 @@ This Docker container makes it easy to get an instance of Bamboo up and running.
 
 Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
-  - Minimized `Dockerfile` for meta data definition
-  - Provision by Ansible and Molecule Docker driver in single layer
+  - Packaging by Packer Docker builder and Ansible provisioner in single layer
   - Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
 
 ### Quick Start
