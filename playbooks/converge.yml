@@ -18,6 +18,22 @@
   remote_user: root
   become: true
   tasks:
+    - name: groupadd
+      group:
+        name: "{{ bamboo_group }}"
+        system: true
+        state: "present"
+
+    - name: useradd
+      user:
+        name: "{{ bamboo_owner }}"
+        group: "{{ bamboo_group }}"
+        home: "{{ bamboo_home }}"
+        shell: "/usr/sbin/nologin"
+        system: true
+        create_home: false
+        state: "present"
+
     - name: prepare directories
       file:
         dest: "{{ item.dest }}"
