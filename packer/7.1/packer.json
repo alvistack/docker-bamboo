@@ -37,35 +37,8 @@
             "type": "shell",
             "inline": [
                 "set -ex",
-                "groupadd -r bamboo",
-                "useradd -r -g bamboo -d /var/atlassian/application-data/bamboo -M -s /usr/sbin/nologin bamboo"
-            ]
-        },
-        {
-            "type": "shell",
-            "inline": [
-                "set -ex",
                 "apt-get update",
-                "DEBIAN_FRONTEND=noninteractive apt-get install -y language-pack-en locales",
-                "localedef -i en_US -c -f UTF-8 en_US.UTF-8",
-                "rm -rf /var/lib/apt/lists/*"
-            ]
-        },
-        {
-            "type": "shell",
-            "inline": [
-                "set -ex",
-                "apt-get update",
-                "DEBIAN_FRONTEND=noninteractive apt-get install -y systemd",
-                "ln -fs /lib/systemd/systemd /usr/sbin/init",
-                "rm -f /etc/systemd/system/*.wants/*",
-                "rm -f /lib/systemd/system/basic.target.wants/*",
-                "rm -f /lib/systemd/system/local-fs.target.wants/*",
-                "rm -f /lib/systemd/system/multi-user.target.wants/*",
-                "rm -f /lib/systemd/system/sockets.target.wants/*initctl*",
-                "rm -f /lib/systemd/system/sockets.target.wants/*udev*",
-                "rm -f /lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup.service",
-                "rm -rf /var/lib/apt/lists/*"
+                "apt-get install -y ca-certificates curl gcc iproute2 python3 python3-dev sudo"
             ]
         },
         {
