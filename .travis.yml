@@ -44,13 +44,15 @@ install:
 
 script:
   - |
-    yamllint .
-    ansible-lint
-    flake8
+    set -ex \
+      && yamllint . \
+      && ansible-lint \
+      && flake8
 
   - |
-    cd packer/$PACKER_BUILDER_NAME
-    packer build packer.json
+    set -ex \
+      && cd packer/$PACKER_BUILDER_NAME \
+      && packer build packer.json
 
 after_success:
   - |
