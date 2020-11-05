@@ -20,14 +20,14 @@ before_install:
     sudo systemctl start docker.service
 
   - |
-    curl -Os https://releases.hashicorp.com/packer/1.6.4/packer_1.6.4_linux_amd64.zip
-    curl -Os https://releases.hashicorp.com/packer/1.6.4/packer_1.6.4_SHA256SUMS
-    curl -Os https://releases.hashicorp.com/packer/1.6.4/packer_1.6.4_SHA256SUMS.sig
+    curl -Os https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_linux_amd64.zip
+    curl -Os https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_SHA256SUMS
+    curl -Os https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_SHA256SUMS.sig
     curl -skL https://keybase.io/hashicorp/pgp_keys.asc | sudo gpg --import
-    gpg --verify packer_1.6.4_SHA256SUMS.sig packer_1.6.4_SHA256SUMS
-    sha256sum -c packer_1.6.4_SHA256SUMS 2>&1 | grep OK
-    sudo unzip -qq -o -d /usr/local/bin packer_1.6.4_linux_amd64.zip
-    rm -rf packer_1.6.4_*
+    gpg --verify packer_1.6.5_SHA256SUMS.sig packer_1.6.5_SHA256SUMS
+    sha256sum -c packer_1.6.5_SHA256SUMS 2>&1 | grep OK
+    sudo unzip -qq -o -d /usr/local/bin packer_1.6.5_linux_amd64.zip
+    rm -rf packer_1.6.5_*
 
   - |
     sudo apt-get update
