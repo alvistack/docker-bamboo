@@ -22,13 +22,13 @@
 	path = roles/containers_common
 	url = https://github.com/alvistack/ansible-role-containers_common.git
 	branch = develop
-[submodule "roles/crun"]
-	path = roles/crun
-	url = https://github.com/alvistack/ansible-role-crun.git
-	branch = develop
 [submodule "roles/cvs"]
 	path = roles/cvs
 	url = https://github.com/alvistack/ansible-role-cvs.git
+	branch = develop
+[submodule "roles/docker"]
+	path = roles/docker
+	url = https://github.com/alvistack/ansible-role-docker.git
 	branch = develop
 [submodule "roles/git"]
 	path = roles/git
@@ -61,6 +61,10 @@
 [submodule "roles/python"]
 	path = roles/python
 	url = https://github.com/alvistack/ansible-role-python.git
+	branch = develop
+[submodule "roles/runc"]
+	path = roles/runc
+	url = https://github.com/alvistack/ansible-role-runc.git
 	branch = develop
 [submodule "roles/skopeo"]
 	path = roles/skopeo
