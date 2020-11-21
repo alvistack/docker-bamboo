@@ -24,14 +24,13 @@ before_install:
     curl -Os https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_SHA256SUMS
     curl -Os https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_SHA256SUMS.sig
     curl -skL https://keybase.io/hashicorp/pgp_keys.asc | sudo gpg --import
-    gpg --verify packer_1.6.5_SHA256SUMS.sig packer_1.6.5_SHA256SUMS
+    sudo gpg --verify packer_1.6.5_SHA256SUMS.sig packer_1.6.5_SHA256SUMS
     sha256sum -c packer_1.6.5_SHA256SUMS 2>&1 | grep OK
     sudo unzip -qq -o -d /usr/local/bin packer_1.6.5_linux_amd64.zip
     rm -rf packer_1.6.5_*
 
   - |
     sudo apt-get update
-    sudo apt-get -y purge python3-openssl
     sudo apt-get -y install ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
     curl -skL https://bootstrap.pypa.io/get-pip.py | sudo -H python3 - --prefix=/usr/local
     sudo -H pip3 install --prefix=/usr/local --upgrade --ignore-installed --requirement requirements.txt
