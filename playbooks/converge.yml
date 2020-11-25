@@ -100,13 +100,16 @@
         name: perforce
 
     - include_role:
+        name: docker
+
+    - include_role:
         name: cni_plugins
 
     - include_role:
         name: containers_common
 
     - include_role:
-        name: crun
+        name: runc
 
     - include_role:
         name: conmon
