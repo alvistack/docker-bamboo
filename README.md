@@ -11,8 +11,8 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective Packer Template Links
 
-  - [`7.1`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/packer/7.1/packer.json)
-  - [`7.0`](https://github.com/alvistack/docker-bamboo/blob/master/packer/7.0/packer.json)
+  - [`7.2`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/packer/7.2/packer.json)
+  - [`7.1`](https://github.com/alvistack/docker-bamboo/blob/master/packer/7.1/packer.json)
 
 ## Overview
 
