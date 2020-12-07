@@ -1,0 +1,73 @@
+---
+
+.script-bootstrap-packer: &script-bootstrap-packer
+  - |
+    curl -Os https://github.com/hashicorp/packer/releases/download/nightly/packer_linux_amd64.zip
+    sudo unzip -qq -o -d /usr/local/bin packer_linux_amd64.zip
+    rm -rf packer_linux_amd64.zip
+
+
+.script-bootstrap-docker: &script-bootstrap-docker
+  - |
+    curl -skL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get -y install containerd.io docker-ce docker-ce-cli
+    sudo systemctl start docker.service
+
+.script-bootstrap-ansible: &script-bootstrap-ansible
+  - |
+    sudo apt-get update
+    sudo apt-get -y install ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
+    curl -skL https://bootstrap.pypa.io/get-pip.py | sudo -H python3 - --prefix=/usr/local
+    sudo -H pip3 install --prefix=/usr/local --upgrade --ignore-installed --requirement requirements.txt
+
+.script-packer-build: &script-packer-build
+  - |
+    cd packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    packer build packer.json
+
+.job-packer: &job-packer
+  script:
+    - *script-bootstrap-packer
+    - *script-bootstrap-docker
+    - *script-bootstrap-ansible
+    - *script-packer-build
+
+default:
+  before_script:
+    - |
+      git submodule sync --recursive
+      git submodule update --init --recursive
+
+    - |
+      yamllint .
+      ansible-lint
+      flake8
+
+  after_script:
+    - |
+      echo $DOCKER_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
+      export _DOCKER_IMAGE=$(docker images | awk '{print $3}' | awk 'NR==2')
+      export _DOCKER_REPO=$CI_PROJECT_NAMESPACE/$(echo $CI_PROJECT_NAME | sed 's/\/docker-/\//g')
+      if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^$PACKER_BUILDER_VERSION ]]; then
+        docker tag $_DOCKER_IMAGE $_DOCKER_REPO:$CI_COMMIT_TAG
+        docker push $_DOCKER_REPO:$CI_COMMIT_TAG
+        docker tag $_DOCKER_IMAGE $_DOCKER_REPO:latest
+        docker push $_DOCKER_REPO:latest
+      elif [[ -n "$CI_COMMIT_BRANCH" ]] && [[ "$CI_COMMIT_BRANCH" =~ master ]]; then
+        docker tag $_DOCKER_IMAGE $_DOCKER_REPO:$_PACKER_BUILDER_VERSION
+        docker push $_DOCKER_REPO:$_PACKER_BUILDER_VERSION
+      fi
+
+docker-7.1:
+  <<: *job-packer
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "7.1"
+
+docker-7.2:
+  <<: *job-packer
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "7.2"
