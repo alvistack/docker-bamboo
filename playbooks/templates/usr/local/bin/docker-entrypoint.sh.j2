@@ -2,7 +2,7 @@
 
 # {{ ansible_managed }}
 
-set -o xtrace
+set -euo pipefail
 
 # Prepend executable if command starts with an option
 if [ "${1:0:1}" = '-' ]; then
