@@ -1,6 +1,6 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-[![Travis](https://img.shields.io/travis/com/alvistack/docker-bamboo.svg)](https://travis-ci.com/alvistack/docker-bamboo)
+[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-bamboo/master)](https://gitlab.com/alvistack/docker-bamboo/-/pipelines)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo.svg)](https://hub.docker.com/r/alvistack/bamboo/)
