@@ -35,7 +35,7 @@
   "provisioners": [
     {
       "inline": [
-        "set -ex",
+        "set -euo pipefail",
         "apt-get update",
         "apt-get dist-upgrade -y",
         "apt-get install -y ca-certificates curl gcc iproute2 python3 python3-dev sudo"

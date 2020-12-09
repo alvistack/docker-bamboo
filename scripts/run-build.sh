@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o xtrace
+set -euo pipefail
 
 DIR=$(dirname "$(readlink -f "$0")")
 
