@@ -49,7 +49,7 @@ default:
     - |
       echo $DOCKER_TOKEN | sudo docker login --username=$DOCKER_USERNAME --password-stdin
       export _DOCKER_IMAGE=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
-      export _DOCKER_REPO=$CI_PROJECT_NAMESPACE/$(echo $CI_PROJECT_NAME | sed 's/\/docker-/\//g')
+      export _DOCKER_REPO=$CI_PROJECT_NAMESPACE/$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')
       if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^$PACKER_BUILDER_VERSION ]]; then
         sudo docker tag $_DOCKER_IMAGE $_DOCKER_REPO:$CI_COMMIT_TAG
         sudo docker push $_DOCKER_REPO:$CI_COMMIT_TAG
