@@ -21,25 +21,23 @@
   tasks:
     - name: rm -rf /root/.ansible/tmp/*
       raw: |
-        set -euo pipefail
         rm -rf /root/.ansible/tmp/*
         rm -rf /root/.cache/*
         rm -rf /tmp/*
       changed_when: false
       ignore_errors: true
 
-    - name: debian | apt-get -y autoclean
+    - name: debian | apt-get -y clean
       raw: |
-        set -euo pipefail
         apt-get -y autoremove
         apt-get -y autoclean
+        apt-get -y clean
         rm -rf /var/lib/apt/lists/*
       changed_when: false
       ignore_errors: true
 
     - name: redhat | yum clean all
       raw: |
-        set -euo pipefail
         yum clean all
         rm -rf /var/cache/yum/*
       changed_when: false
@@ -47,7 +45,6 @@
 
     - name: suse | zypper clean --all
       raw: |
-        set -euo pipefail
         zypper clean --all
         rm -rf /var/cache/zypper/*
       changed_when: false
