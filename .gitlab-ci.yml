@@ -52,6 +52,10 @@
     echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
     sudo docker tag $_ID $_ORG/$_IMAGE:$_TAG
     sudo docker push $_ORG/$_IMAGE:$_TAG
+    if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^$PACKER_BUILDER_VERSION ]]; then
+      sudo docker tag $_ID $_ORG/$_IMAGE:latest
+      sudo docker push $_ORG/$_IMAGE:latest
+    fi
 
 .job-packer: &job-packer
   script:
