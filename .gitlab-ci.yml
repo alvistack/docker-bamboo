@@ -39,18 +39,19 @@
 
 .script-docker-push: &script-docker-push
   - |
-    echo $DOCKER_TOKEN | sudo docker login --username=$DOCKER_USERNAME --password-stdin
-    export _DOCKER_IMAGE=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
-    export _DOCKER_REPO=$CI_PROJECT_NAMESPACE/$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')
+    export _ID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
+    export _ORG=$CI_PROJECT_NAMESPACE
+    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')
     if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^$PACKER_BUILDER_VERSION ]]; then
-      sudo docker tag $_DOCKER_IMAGE $_DOCKER_REPO:$CI_COMMIT_TAG
-      sudo docker push $_DOCKER_REPO:$CI_COMMIT_TAG
-      sudo docker tag $_DOCKER_IMAGE $_DOCKER_REPO:latest
-      sudo docker push $_DOCKER_REPO:latest
+      export _TAG=$CI_COMMIT_TAG
     elif [[ -n "$CI_COMMIT_BRANCH" ]] && [[ "$CI_COMMIT_BRANCH" =~ master ]]; then
-      sudo docker tag $_DOCKER_IMAGE $_DOCKER_REPO:$_PACKER_BUILDER_VERSION
-      sudo docker push $_DOCKER_REPO:$_PACKER_BUILDER_VERSION
+      export _TAG=$_PACKER_BUILDER_VERSION
+    else
+      exit 0
     fi
+    echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+    sudo docker tag $_ID $_ORG/$_IMAGE:$_TAG
+    sudo docker push $_ORG/$_IMAGE:$_TAG
 
 .job-packer: &job-packer
   script:
