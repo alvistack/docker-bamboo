@@ -46,7 +46,8 @@
       "galaxy_file": "./ansible-galaxy-requirements.yml",
       "inventory_directory": "./",
       "playbook_file": "./packer.yml",
-      "type": "ansible"
+      "type": "ansible",
+      "user": "root"
     }
   ]
 }
