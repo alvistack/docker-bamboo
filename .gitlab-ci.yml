@@ -41,21 +41,17 @@
   - |
     export _ID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
     export _ORG=$CI_PROJECT_NAMESPACE
-    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')
-    if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^$PACKER_BUILDER_VERSION ]]; then
+    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
+    if [[ -n "$CI_COMMIT_TAG" ]]; then
       export _TAG=$CI_COMMIT_TAG
-    elif [[ -n "$CI_COMMIT_BRANCH" ]] && [[ "$CI_COMMIT_BRANCH" =~ master ]]; then
-      export _TAG=$_PACKER_BUILDER_VERSION
     else
       exit 0
     fi
     echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
     sudo docker tag $_ID $_ORG/$_IMAGE:$_TAG
     sudo docker push $_ORG/$_IMAGE:$_TAG
-    if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^$PACKER_BUILDER_VERSION ]]; then
-      sudo docker tag $_ID $_ORG/$_IMAGE:latest
-      sudo docker push $_ORG/$_IMAGE:latest
-    fi
+    sudo docker tag $_ID $_ORG/$_IMAGE:latest
+    sudo docker push $_ORG/$_IMAGE:latest
 
 .job-packer: &job-packer
   script:
