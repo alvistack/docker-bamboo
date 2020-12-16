@@ -41,14 +41,14 @@
     export _ID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
     mkdir -p output-docker
     sudo docker tag $_ID $_ORG/$_IMAGE:latest
-    sudo docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION.tar.gz
+    sudo docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/image.tar.gz
 
 .script-docker-run: &script-docker-run
   - |
     cd packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG=$CI_PROJECT_NAMESPACE
     export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
-    sudo docker load --input output-docker/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION.tar.gz
+    sudo docker load --input output-docker/image.tar.gz
     sudo docker run -itd $_ORG/$_IMAGE:latest
 
 .script-docker-push: &script-docker-push
@@ -64,7 +64,7 @@
       exit 0
     fi
     echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    sudo docker load --input output-docker/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION.tar.gz
+    sudo docker load --input output-docker/image.tar.gz
     sudo docker push $_ORG/$_IMAGE:latest
     sudo docker tag $_ORG/$_IMAGE:latest $_ORG/$_IMAGE:$_TAG
     sudo docker push $_ORG/$_IMAGE:$_TAG
@@ -87,18 +87,18 @@
     - *script-bootstrap-docker
     - *script-docker-push
 
-cache:
-  key: "$CI_PIPELINE_ID"
-  paths:
-    - packer/*/output-docker/*.tar.gz
-
 default:
+  cache:
+    paths:
+      - packer/*/output-docker/*.tar.gz
   before_script:
     - *script-git-submodule
 
 build:docker-7.2:
   <<: *job-packer-build
   stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-docker-7.2"
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
@@ -106,6 +106,8 @@ build:docker-7.2:
 test:docker-7.2:
   <<: *job-docker-run
   stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-docker-7.2"
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
@@ -115,6 +117,8 @@ test:docker-7.2:
 deploy:docker-7.2:
   <<: *job-docker-push
   stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-docker-7.2"
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
@@ -124,6 +128,8 @@ deploy:docker-7.2:
 build:docker-7.1:
   <<: *job-packer-build
   stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-docker-7.1"
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
@@ -131,6 +137,8 @@ build:docker-7.1:
 test:docker-7.1:
   <<: *job-docker-run
   stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-docker-7.1"
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
@@ -140,6 +148,8 @@ test:docker-7.1:
 deploy:docker-7.1:
   <<: *job-docker-push
   stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-docker-7.1"
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
