@@ -35,11 +35,25 @@
 .script-packer-build: &script-packer-build
   - |
     cd packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    export _ORG=$CI_PROJECT_NAMESPACE
+    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
     sudo packer build packer.json
+    export _ID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
+    mkdir -p output-docker
+    sudo docker tag $_ID $_ORG/$_IMAGE:latest
+    sudo docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION.tar.gz
+
+.script-docker-run: &script-docker-run
+  - |
+    cd packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    export _ORG=$CI_PROJECT_NAMESPACE
+    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
+    sudo docker load --input output-docker/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION.tar.gz
+    sudo docker run -itd $_ORG/$_IMAGE:latest
 
 .script-docker-push: &script-docker-push
   - |
-    export _ID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
+    cd packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG=$CI_PROJECT_NAMESPACE
     export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
     if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
@@ -50,32 +64,84 @@
       exit 0
     fi
     echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    sudo docker tag $_ID $_ORG/$_IMAGE:$_TAG
-    sudo docker push $_ORG/$_IMAGE:$_TAG
-    sudo docker tag $_ID $_ORG/$_IMAGE:latest
+    sudo docker load --input output-docker/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION.tar.gz
     sudo docker push $_ORG/$_IMAGE:latest
+    sudo docker tag $_ORG/$_IMAGE:latest $_ORG/$_IMAGE:$_TAG
+    sudo docker push $_ORG/$_IMAGE:$_TAG
 
-.job-packer: &job-packer
+.job-packer-build: &job-packer-build
   script:
     - *script-bootstrap-packer
     - *script-bootstrap-docker
     - *script-bootstrap-ansible
     - *script-linters
     - *script-packer-build
+
+.job-docker-run: &job-docker-run
+  script:
+    - *script-bootstrap-docker
+    - *script-docker-run
+
+.job-docker-push: &job-docker-push
+  script:
+    - *script-bootstrap-docker
     - *script-docker-push
+
+cache:
+  key: "$CI_PIPELINE_ID"
+  paths:
+    - packer/*/output-docker/*.tar.gz
 
 default:
   before_script:
     - *script-git-submodule
 
-docker-7.1:
-  <<: *job-packer
+build:docker-7.2:
+  <<: *job-packer-build
+  stage: build
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "7.2"
+
+test:docker-7.2:
+  <<: *job-docker-run
+  stage: test
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "7.2"
+  dependencies:
+    - build:docker-7.2
+
+deploy:docker-7.2:
+  <<: *job-docker-push
+  stage: deploy
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "7.2"
+  dependencies:
+    - test:docker-7.2
+
+build:docker-7.1:
+  <<: *job-packer-build
+  stage: build
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
 
-docker-7.2:
-  <<: *job-packer
+test:docker-7.1:
+  <<: *job-docker-run
+  stage: test
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "7.2"
+    _PACKER_BUILDER_VERSION: "7.1"
+  dependencies:
+    - build:docker-7.1
+
+deploy:docker-7.1:
+  <<: *job-docker-push
+  stage: deploy
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "7.1"
+  dependencies:
+    - test:docker-7.1
