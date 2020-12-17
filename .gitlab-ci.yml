@@ -70,6 +70,9 @@
     sudo docker push $_ORG/$_IMAGE:$_TAG
 
 .job-packer-build: &job-packer-build
+  cache:
+    paths:
+      - packer/*/output-docker/*.tar.gz
   script:
     - *script-bootstrap-packer
     - *script-bootstrap-docker
@@ -78,11 +81,19 @@
     - *script-packer-build
 
 .job-docker-run: &job-docker-run
+  cache:
+    paths:
+      - packer/*/output-docker/*.tar.gz
+    policy: pull
   script:
     - *script-bootstrap-docker
     - *script-docker-run
 
 .job-docker-push: &job-docker-push
+  cache:
+    paths:
+      - packer/*/output-docker/*.tar.gz
+    policy: pull
   script:
     - *script-bootstrap-docker
     - *script-docker-push
@@ -96,8 +107,6 @@ build:docker-7.2:
   stage: build
   cache:
     key: "$CI_PIPELINE_ID-docker-7.2"
-    paths:
-      - packer/*/output-docker/*.tar.gz
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
@@ -107,12 +116,10 @@ test:docker-7.2:
   stage: test
   cache:
     key: "$CI_PIPELINE_ID-docker-7.2"
-    paths:
-      - packer/*/output-docker/*.tar.gz
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
-  dependencies:
+  needs:
     - build:docker-7.2
 
 deploy:docker-7.2:
@@ -120,12 +127,10 @@ deploy:docker-7.2:
   stage: deploy
   cache:
     key: "$CI_PIPELINE_ID-docker-7.2"
-    paths:
-      - packer/*/output-docker/*.tar.gz
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
-  dependencies:
+  needs:
     - test:docker-7.2
 
 build:docker-7.1:
@@ -133,8 +138,6 @@ build:docker-7.1:
   stage: build
   cache:
     key: "$CI_PIPELINE_ID-docker-7.1"
-    paths:
-      - packer/*/output-docker/*.tar.gz
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
@@ -144,12 +147,10 @@ test:docker-7.1:
   stage: test
   cache:
     key: "$CI_PIPELINE_ID-docker-7.1"
-    paths:
-      - packer/*/output-docker/*.tar.gz
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
-  dependencies:
+  needs:
     - build:docker-7.1
 
 deploy:docker-7.1:
@@ -157,10 +158,8 @@ deploy:docker-7.1:
   stage: deploy
   cache:
     key: "$CI_PIPELINE_ID-docker-7.1"
-    paths:
-      - packer/*/output-docker/*.tar.gz
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
-  dependencies:
+  needs:
     - test:docker-7.1
