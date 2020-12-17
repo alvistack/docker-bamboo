@@ -43,14 +43,6 @@
     sudo docker tag $_ID $_ORG/$_IMAGE:latest
     sudo docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/image.tar.gz
 
-.script-docker-run: &script-docker-run
-  - |
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
-    export _ORG=$CI_PROJECT_NAMESPACE
-    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
-    sudo docker load --input output-docker/image.tar.gz
-    sudo docker run -itd $_ORG/$_IMAGE:latest
-
 .script-docker-push: &script-docker-push
   - |
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
@@ -77,11 +69,6 @@
     - *script-linters
     - *script-packer-build
 
-.job-docker-run: &job-docker-run
-  script:
-    - *script-bootstrap-docker
-    - *script-docker-run
-
 .job-docker-push: &job-docker-push
   script:
     - *script-bootstrap-docker
@@ -102,19 +89,6 @@ build:docker-7.2:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
 
-test:docker-7.2:
-  <<: *job-docker-run
-  stage: test
-  cache:
-    key: "$CI_PIPELINE_ID-docker-7.2"
-    paths:
-      - packer/*/output-docker/*.tar.gz
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "7.2"
-  needs:
-    - build:docker-7.2
-
 deploy:docker-7.2:
   <<: *job-docker-push
   stage: deploy
@@ -126,7 +100,7 @@ deploy:docker-7.2:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
   needs:
-    - test:docker-7.2
+    - build:docker-7.2
 
 build:docker-7.1:
   <<: *job-packer-build
@@ -139,19 +113,6 @@ build:docker-7.1:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
 
-test:docker-7.1:
-  <<: *job-docker-run
-  stage: test
-  cache:
-    key: "$CI_PIPELINE_ID-docker-7.1"
-    paths:
-      - packer/*/output-docker/*.tar.gz
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "7.1"
-  needs:
-    - build:docker-7.1
-
 deploy:docker-7.1:
   <<: *job-docker-push
   stage: deploy
@@ -163,4 +124,4 @@ deploy:docker-7.1:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
   needs:
-    - test:docker-7.1
+    - build:docker-7.1
