@@ -7,9 +7,9 @@
 
 .script-bootstrap-packer: &script-bootstrap-packer
   - |
-    curl -skL -O https://github.com/hashicorp/packer/releases/download/nightly/packer_linux_amd64.zip
-    sudo unzip -qq -o -d /usr/local/bin packer_linux_amd64.zip
-    rm -rf packer_linux_amd64.zip
+    curl -skL -O https://releases.hashicorp.com/packer/1.6.6/packer_1.6.6_linux_amd64.zip
+    sudo unzip -qq -o -d /usr/local/bin packer_1.6.6_linux_amd64.zip
+    rm -rf packer_1.6.6_linux_amd64.zip
 
 .script-bootstrap-docker: &script-bootstrap-docker
   - |
