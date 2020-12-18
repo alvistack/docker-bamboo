@@ -37,11 +37,11 @@
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG=$CI_PROJECT_NAMESPACE
     export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
-    sudo packer build packer.json
-    export _ID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')
+    packer build packer.json
+    export _ID=$(docker images | awk '{print $3}' | awk 'NR==2')
     mkdir -p output-docker
-    sudo docker tag $_ID $_ORG/$_IMAGE:latest
-    sudo docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/image.tar.gz
+    docker tag $_ID $_ORG/$_IMAGE:latest
+    docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/image.tar.gz
 
 .script-docker-push: &script-docker-push
   - |
@@ -55,11 +55,11 @@
     else
       exit 0
     fi
-    echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    sudo docker load --input output-docker/image.tar.gz
-    sudo docker push $_ORG/$_IMAGE:latest
-    sudo docker tag $_ORG/$_IMAGE:latest $_ORG/$_IMAGE:$_TAG
-    sudo docker push $_ORG/$_IMAGE:$_TAG
+    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+    docker load --input output-docker/image.tar.gz
+    docker push $_ORG/$_IMAGE:latest
+    docker tag $_ORG/$_IMAGE:latest $_ORG/$_IMAGE:$_TAG
+    docker push $_ORG/$_IMAGE:$_TAG
 
 .job-packer-build: &job-packer-build
   script:
