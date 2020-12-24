@@ -5,6 +5,10 @@
     git submodule sync --recursive
     git submodule update --init --recursive
 
+.script-docker-login: &script-docker-login
+  - |
+    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+
 .script-bootstrap-packer: &script-bootstrap-packer
   - |
     curl -skL -O https://releases.hashicorp.com/packer/1.6.6/packer_1.6.6_linux_amd64.zip
@@ -55,7 +59,6 @@
     else
       exit 0
     fi
-    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
     docker load --input output-docker/image.tar.gz
     docker push $_ORG/$_IMAGE:latest
     docker tag $_ORG/$_IMAGE:latest $_ORG/$_IMAGE:$_TAG
@@ -77,6 +80,7 @@
 default:
   before_script:
     - *script-git-submodule
+    - *script-docker-login
 
 build:docker-7.2:
   <<: *job-packer-build
