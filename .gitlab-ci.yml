@@ -78,7 +78,7 @@
     - *script-docker-push
 
 default:
-  retry: 3
+  retry: 2
   before_script:
     - *script-git-submodule
     - *script-docker-login
