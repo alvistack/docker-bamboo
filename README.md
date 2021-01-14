@@ -1,9 +1,9 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-bamboo/master)](https://gitlab.com/alvistack/docker-bamboo/-/pipelines)
+[![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-bamboo/master)](https://gitlab.com/alvistack/docker-bamboo/-/pipelines)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/blob/master/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo.svg)](https://hub.docker.com/r/alvistack/bamboo/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo-7.2.svg)](https://hub.docker.com/r/alvistack/bamboo-7.2)
 
 Bamboo is a continuous integration (CI) server that can be used to automate the release management for a software application, creating a continuous delivery pipeline.
 
@@ -11,8 +11,10 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective Packer Template Links
 
-  - [`7.2`, `latest`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-7.2/packer.json)
-  - [`7.1`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-7.1/packer.json)
+  - [`alvistack/bamboo-7.2`](https://hub.docker.com/r/alvistack/bamboo-7.2)
+      - [`packer/docker-7.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-7.2/packer.json)
+  - [`alvistack/bamboo-7.1`](https://hub.docker.com/r/alvistack/bamboo-7.1)
+      - [`packer/docker-7.1/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-7.1/packer.json)
 
 ## Overview
 
@@ -174,13 +176,13 @@ For evaluations you can use the built-in database that will store its files in t
 
 ## Versioning
 
-### `alvistack/bamboo:latest`
+### `YYYYMMDD.Y.Z`
 
-The `latest` tag matches the most recent [GitHub Release](https://github.com/alvistack/docker-bamboo/releases) of this repository. Thus using `alvistack/bamboo:latest` or `alvistack/bamboo` will ensure you are running the most up to date stable version of this image.
+Release tags could be find from [GitHub Release](https://github.com/alvistack/docker-bamboo/releases) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
 
-### `alvistack/bamboo:<version>`
+### `YYYYMMDD.0.0`
 
-The version tags are rolling release rebuild by [Travis](https://travis-ci.com/alvistack/docker-bamboo) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
+Version tags ended with `.0.0` are rolling release rebuild by [GitLab pipeline](https://gitlab.com/alvistack/docker-bamboo/-/pipelines) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
 
 ## License
 
