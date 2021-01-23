@@ -5,30 +5,33 @@
     git submodule sync --recursive
     git submodule update --init --recursive
 
-.script-docker-login: &script-docker-login
-  - |
-    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-
 .script-bootstrap-packer: &script-bootstrap-packer
   - |
-    curl -skL -O https://releases.hashicorp.com/packer/1.6.6/packer_1.6.6_linux_amd64.zip
-    sudo unzip -qq -o -d /usr/local/bin packer_1.6.6_linux_amd64.zip
-    rm -rf packer_1.6.6_linux_amd64.zip
+    if ! [[ -x "$(command -v packer)" ]]; then
+      curl -skL -O https://releases.hashicorp.com/packer/1.6.6/packer_1.6.6_linux_amd64.zip
+      sudo unzip -qq -o -d /usr/local/bin packer_1.6.6_linux_amd64.zip
+      rm -rf packer_1.6.6_linux_amd64.zip
+    fi
 
 .script-bootstrap-docker: &script-bootstrap-docker
   - |
-    curl -skL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-    sudo apt-get update
-    sudo apt-get -y install containerd.io docker-ce docker-ce-cli
+    if ! [[ -x "$(command -v docker)" ]]; then
+      curl -skL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      sudo add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+      sudo apt-get update
+      sudo apt-get -y install containerd.io docker-ce docker-ce-cli
+    fi
     sudo systemctl start docker.service
+    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
 
 .script-bootstrap-ansible: &script-bootstrap-ansible
   - |
-    sudo apt-get update
-    sudo apt-get -y install ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
-    curl -skL https://bootstrap.pypa.io/get-pip.py | sudo -H python3 - --prefix=/usr/local
-    sudo -H pip3 install --prefix=/usr/local --upgrade --requirement requirements.txt
+    if ! [[ -x "$(command -v ansible)" ]]; then
+      sudo apt-get update
+      sudo apt-get -y install ca-certificates curl gcc iproute2 pwgen python3 python3-dev sudo
+      curl -skL https://bootstrap.pypa.io/get-pip.py | sudo -H python3 - --prefix=/usr/local
+      sudo -H pip3 install --prefix=/usr/local --upgrade --requirement requirements.txt
+    fi
 
 .script-linters: &script-linters
   - |
@@ -81,7 +84,6 @@ default:
   retry: 2
   before_script:
     - *script-git-submodule
-    - *script-docker-login
 
 build:docker-7.2:
   <<: *job-packer-build
