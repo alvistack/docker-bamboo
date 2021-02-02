@@ -34,43 +34,11 @@
         create_home: false
         state: "present"
 
-    - name: prepare directories
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0755') }}"
-        state: "{{ item.state | default('directory') }}"
-      loop:
-        - { dest: "/etc/containers" }
-        - { dest: "/usr/local/bin" }
-
-    - name: copy templates
-      template:
-        dest: "{{ item.dest }}"
-        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-      loop:
-        - { dest: "/etc/containers/nodocker" }
-        - { dest: "/usr/local/bin/docker", mode: "0755" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
-
-    - name: prepare files
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-        state: "{{ item.state | default('file') }}"
-      loop:
-        - { dest: "/etc/containers/nodocker" }
-        - { dest: "/usr/local/bin/docker", mode: "0755" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
-
     - include_role:
         name: python
+
+    - include_role:
+        name: ansible
 
     - include_role:
         name: locales
@@ -128,3 +96,6 @@
 
     - include_role:
         name: bamboo
+        apply:
+          tags: bamboo
+      tags: bamboo

@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+  - Remove adhoc config with environment variables
+
 ## 20210114.1.0 - 2021-01-14
 
 ### Major Changes

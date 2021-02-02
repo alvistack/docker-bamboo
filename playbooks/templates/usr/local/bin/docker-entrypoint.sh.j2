@@ -2,7 +2,7 @@
 
 # {{ ansible_managed }}
 
-set -euo pipefail
+set -euxo pipefail
 
 # Prepend executable if command starts with an option
 if [ "${1:0:1}" = '-' ]; then
@@ -15,6 +15,11 @@ if [ "$1" = 'start-bamboo.sh' ] && [ "$(id -u)" = '0' ]; then
     chown $BAMBOO_OWNER:$BAMBOO_GROUP $BAMBOO_HOME $BAMBOO_HOME/shared
     chmod 0755 $BAMBOO_HOME $BAMBOO_HOME/shared
     exec gosu $BAMBOO_OWNER "$BASH_SOURCE" "$@"
+fi
+
+# Verify configuration with Ansible
+if [ "$1" = 'start-bamboo.sh' ]; then
+    ansible-playbook --tags bamboo /etc/ansible/playbooks/converge.yml
 fi
 
 exec "$@"
