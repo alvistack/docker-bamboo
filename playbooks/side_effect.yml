@@ -19,59 +19,44 @@
   become: true
   gather_facts: false
   tasks:
-    - name: apt-get install
-      apt:
-        name: "{{ item.name }}"
-        state: "{{ item.state }}"
-      loop:
-        - { state: "latest", name: "rsync" }
-        - { state: "latest", name: "sudo" }
-      register: result
-      until: result is succeeded
+    - name: find /var/cache/ansible/* -type f -a -not -name '*.log' -exec rm {} \;
+      raw: |
+        set -eu
+        find /var/cache/ansible/* -type f -a -not -name '*.log' -exec rm {} \;
+        rm -rf /root/.cache/*
+        rm -rf /tmp/*
+      changed_when: false
+      ignore_errors: true
 
-    - name: prepare directories
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0755') }}"
-        state: "{{ item.state | default('directory') }}"
-      loop:
-        - { dest: "/etc/ansible" }
-        - { dest: "/etc/ansible/playbooks" }
-        - { dest: "/etc/ansible/roles" }
-        - { dest: "/etc/sudoers.d" }
-        - { dest: "/usr/local/bin" }
+    - name: debian | apt-get -y clean
+      raw: |
+        set -eu
+        apt-get -y autoremove
+        apt-get -y autoclean
+        apt-get -y clean
+        rm -rf /var/lib/apt/lists/*
+      changed_when: false
+      ignore_errors: true
 
-    - name: copy templates
-      template:
-        dest: "{{ item.dest }}"
-        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-      loop:
-        - { dest: "/etc/ansible/ansible.cfg" }
-        - { dest: "/etc/sudoers.d/bamboo" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+    - name: redhat | yum clean all
+      raw: |
+        set -eu
+        yum clean all
+        rm -rf /var/cache/yum/*
+      changed_when: false
+      ignore_errors: true
 
-    - name: prepare files
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-        state: "{{ item.state | default('file') }}"
-      loop:
-        - { dest: "/etc/ansible/ansible.cfg" }
-        - { dest: "/etc/sudoers.d/bamboo" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+    - name: suse | zypper clean --all
+      raw: |
+        set -eu
+        zypper clean --all
+        rm -rf /var/cache/zypper/*
+      changed_when: false
+      ignore_errors: true
 
-    - name: sync playbooks
-      synchronize:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop:
-        - { src: "../inventory/default/", dest: "/etc/ansible" }
-        - { src: "../roles/", dest: "/etc/ansible/roles" }
-        - { src: "../playbooks/", dest: "/etc/ansible/playbooks" }
+    - name: redhat | subscription-manager unregister
+      raw: |
+        set -eu
+        subscription-manager unregister
+      changed_when: false
+      ignore_errors: true
