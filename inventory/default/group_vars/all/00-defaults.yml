@@ -17,7 +17,6 @@
 containers_common_engine_cgroup_manager: "cgroupfs"
 containers_common_storage_driver: "vfs"
 openjdk_release: "8"
-bamboo_version: "7.2.3"
 bamboo_owner: "bamboo"
 bamboo_group: "bamboo"
 bamboo_home: "/var/atlassian/application-data/bamboo"
