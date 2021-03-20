@@ -18,21 +18,39 @@
   remote_user: root
   become: true
   tasks:
-    - name: groupadd
-      group:
-        name: "{{ bamboo_group }}"
-        system: true
-        state: "present"
+    - name: include default variables
+      include_vars: "./vars/main.yml"
 
-    - name: useradd
-      user:
-        name: "{{ bamboo_owner }}"
-        group: "{{ bamboo_group }}"
-        home: "{{ bamboo_home }}"
-        shell: "/usr/sbin/nologin"
-        system: true
-        create_home: false
-        state: "present"
+    - name: include release specific variables
+      include_vars: "{{ lookup('first_found', _params) }}"
+      vars:
+        _params:
+          files:
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}.yml"
+          paths:
+            - "./vars"
+      ignore_errors: true
+
+    - name: include release specific tasks
+      include_tasks: "{{ lookup('first_found', _params) }}"
+      vars:
+        _params:
+          files:
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}.yml"
+          paths:
+            - "./tasks"
+      ignore_errors: true
+
+    - name: include default tasks
+      include_tasks: "./tasks/main.yml"
 
     - name: include role
       include_role:
@@ -144,7 +162,6 @@
         - { dest: "/etc/ansible/playbooks" }
         - { dest: "/etc/ansible/roles" }
         - { dest: "/etc/sudoers.d" }
-        - { dest: "/usr/local/bin" }
 
     - name: copy templates
       template:
@@ -157,7 +174,6 @@
         - { dest: "/etc/ansible/ansible.cfg" }
         - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
         - { dest: "/etc/sudoers.d/bamboo" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
     - name: prepare files
       file:
@@ -170,7 +186,6 @@
         - { dest: "/etc/ansible/ansible.cfg" }
         - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
         - { dest: "/etc/sudoers.d/bamboo" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
     - name: sync playbooks
       synchronize:
