@@ -23,6 +23,19 @@
       "type": "docker"
     }
   ],
+  "post-processors": [
+    {
+      "inline": [
+        "set -eu",
+        "mkdir -p output-docker"
+      ],
+      "type": "shell-local"
+    },
+    {
+      "path": "output-docker/image.tar.gz",
+      "type": "docker-save"
+    }
+  ],
   "provisioners": [
     {
       "inline": [

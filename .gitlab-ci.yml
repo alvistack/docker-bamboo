@@ -50,13 +50,7 @@
 .script-packer-build: &script-packer-build
   - |
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
-    export _ORG=$CI_PROJECT_NAMESPACE
-    export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
     packer build packer.json
-    export _ID=$(docker images | awk '{print $3}' | awk 'NR==2')
-    mkdir -p output-docker
-    docker tag $_ID $_ORG/$_IMAGE:latest
-    docker save $_ORG/$_IMAGE:latest | gzip -9 > output-docker/image.tar.gz
 
 .script-docker-push: &script-docker-push
   - |
@@ -71,8 +65,10 @@
     export _ORG=$CI_PROJECT_NAMESPACE
     export _IMAGE=$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION
     docker load --input output-docker/image.tar.gz
+    export _ID=$(docker images | awk '{ print $3 }' | awk 'NR==2')
+    docker tag $_ID $_ORG/$_IMAGE:latest
     docker push $_ORG/$_IMAGE:latest
-    docker tag $_ORG/$_IMAGE:latest $_ORG/$_IMAGE:$_TAG
+    docker tag $_ID $_ORG/$_IMAGE:$_TAG
     docker push $_ORG/$_IMAGE:$_TAG
 
 .job-packer-build: &job-packer-build
@@ -99,7 +95,7 @@ build:docker-7.2:
   cache:
     key: "$CI_PIPELINE_ID-docker-7.2"
     paths:
-      - packer/*/output-docker/*.tar.gz
+      - packer/*/output-docker
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.2"
@@ -110,7 +106,7 @@ deploy:docker-7.2:
   cache:
     key: "$CI_PIPELINE_ID-docker-7.2"
     paths:
-      - packer/*/output-docker/*.tar.gz
+      - packer/*/output-docker
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
@@ -124,7 +120,7 @@ build:docker-7.1:
   cache:
     key: "$CI_PIPELINE_ID-docker-7.1"
     paths:
-      - packer/*/output-docker/*.tar.gz
+      - packer/*/output-docker
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
     _PACKER_BUILDER_VERSION: "7.1"
@@ -135,7 +131,7 @@ deploy:docker-7.1:
   cache:
     key: "$CI_PIPELINE_ID-docker-7.1"
     paths:
-      - packer/*/output-docker/*.tar.gz
+      - packer/*/output-docker
     policy: pull
   variables:
     _PACKER_BUILDER_PROVIDER: "docker"
