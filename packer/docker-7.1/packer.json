@@ -27,20 +27,11 @@
     {
       "inline": [
         "set -eu",
-        "mkdir -p output-docker"
+        "export _ID=$(docker images | awk '{ print $3 }' | awk 'NR==2')",
+        "mkdir -p output-docker",
+        "docker save $_ID | gzip -9 > output-docker/image.tar.gz"
       ],
       "type": "shell-local"
-    },
-    {
-      "path": "output-docker/image.tar",
-      "type": "docker-save"
-    },
-    {
-      "compression_level": 9,
-      "format": ".gz",
-      "keep_input_artifact": true,
-      "output": "output-docker/image.tar.gz",
-      "type": "compress"
     }
   ],
   "provisioners": [
