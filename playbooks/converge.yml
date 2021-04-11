@@ -135,9 +135,6 @@
     - name: include role
       include_role:
         name: bamboo
-        apply:
-          tags: bamboo
-      tags: bamboo
 
     - name: apt-get install
       apt:
