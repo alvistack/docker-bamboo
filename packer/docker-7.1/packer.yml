@@ -16,5 +16,4 @@
 
 - import_playbook: ../../playbooks/prepare.yml
 - import_playbook: ../../playbooks/converge.yml
-- import_playbook: ../../playbooks/verify.yml
 - import_playbook: ../../playbooks/cleanup.yml
