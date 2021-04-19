@@ -15,6 +15,7 @@
       sudo unzip -qq -o -d /usr/local/bin packer-plugin-docker_v0.0.7_x5.0_linux_amd64.zip
       rm -rf packer-plugin-docker_v0.0.7_x5.0_linux_amd64.zip
     fi
+    sh -x packer --version
 
 .script-bootstrap-docker: &script-bootstrap-docker
   - |
@@ -25,12 +26,13 @@
       sudo -E apt-get update
       sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
     fi
+    sh -x docker --version
     sudo systemctl start docker.service
     echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
 
-.script-bootstrap-ansible: &script-bootstrap-ansible
+.script-bootstrap-python: &script-bootstrap-python
   - |
-    if ! [[ -x "$(command -v ansible)" ]]; then
+    if ! [[ -x "$(command -v pipx)" ]]; then
       export DEBIAN_FRONTEND=noninteractive
       export PIPX_HOME=/usr/local/share/pipx
       export PIPX_BIN_DIR=/usr/local/bin
@@ -39,10 +41,21 @@
       sudo -E pip3 install --prefix=/usr/local --upgrade pipx
       sudo -E pipx install --force --pip-args='--upgrade' flake8
       sudo -E pipx install --force --pip-args='--upgrade' yamllint
+    fi
+    sh -x python3 --version
+    sh -x pipx --version
+    sh -x flake8 --version
+    sh -x yamllint --version
+
+.script-bootstrap-ansible: &script-bootstrap-ansible
+  - |
+    if ! [[ -x "$(command -v ansible)" ]]; then
       sudo -E pipx install --force --pip-args='--upgrade' --include-deps 'ansible>=2.10.3,<2.11.0'
       sudo -E pipx inject --force --pip-args='--upgrade' --include-apps ansible ansible-lint
       sudo -E pipx inject --force --pip-args='--upgrade' ansible docker netaddr python-vagrant
     fi
+    sh -x ansible --version
+    sh -x ansible-lint --version
 
 .script-linters: &script-linters
   - |
@@ -78,6 +91,7 @@
   script:
     - *script-bootstrap-packer
     - *script-bootstrap-docker
+    - *script-bootstrap-python
     - *script-bootstrap-ansible
     - *script-linters
     - *script-packer-build
