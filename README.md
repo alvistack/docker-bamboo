@@ -34,7 +34,7 @@ Volume permission is NOT managed by entry scripts. To get started you can use a 
 Start Atlassian Bamboo Server:
 
     # Pull latest image
-    docker pull alvistack/bamboo
+    docker pull alvistack/bamboo-7.2
     
     # Run as detach
     docker run \
@@ -43,7 +43,7 @@ Start Atlassian Bamboo Server:
         --publish 8085:8085 \
         --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
         --privileged \
-        alvistack/bamboo
+        alvistack/bamboo-7.2
 
 **Success**. Bamboo is now available on <http://localhost:8085>
 
@@ -67,7 +67,7 @@ Start Atlassian Bamboo Remote Agent:
         --publish 8085:8085 \
         --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
         --privileged \
-        alvistack/bamboo \
+        alvistack/bamboo-7.2 \
         java -jar /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar http://bamboo-host-server:8085/bamboo/agentServer/
 
 ### Run Build with Podman
