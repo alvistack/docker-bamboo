@@ -26,7 +26,7 @@
         rm -rf /root/.cache/*
         rm -rf /tmp/*
       changed_when: false
-      ignore_errors: true
+      failed_when: false
 
     - name: debian | apt-get -y clean
       raw: |
@@ -36,7 +36,7 @@
         apt-get -y clean
         rm -rf /var/lib/apt/lists/*
       changed_when: false
-      ignore_errors: true
+      failed_when: false
 
     - name: redhat | yum clean all
       raw: |
@@ -44,7 +44,7 @@
         yum clean all
         rm -rf /var/cache/yum/*
       changed_when: false
-      ignore_errors: true
+      failed_when: false
 
     - name: suse | zypper clean --all
       raw: |
@@ -52,7 +52,7 @@
         zypper clean --all
         rm -rf /var/cache/zypper/*
       changed_when: false
-      ignore_errors: true
+      failed_when: false
 
     - name: redhat | subscription-manager unregister
       raw: |
@@ -61,4 +61,4 @@
         subscription-manager unregister
         subscription-manager clean
       changed_when: false
-      ignore_errors: true
+      failed_when: false
