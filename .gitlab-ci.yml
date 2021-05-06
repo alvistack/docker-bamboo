@@ -26,8 +26,8 @@
       sudo -E apt-get update
       sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
     fi
-    sh -x -c "docker --version"
     sudo systemctl start docker.service
+    sh -x -c "docker --version"
     echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
 
 .script-bootstrap-python: &script-bootstrap-python
