@@ -14,9 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# containers_common
 containers_common_engine_cgroup_manager: "cgroupfs"
 containers_common_storage_driver: "vfs"
+
+# openjdk
 openjdk_release: "8"
+
+# bamboo
 bamboo_owner: "bamboo"
 bamboo_group: "bamboo"
 bamboo_home: "/var/atlassian/application-data/bamboo"
