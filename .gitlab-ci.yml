@@ -26,8 +26,6 @@
       sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
     fi
     sudo systemctl start docker.service
-      curl -skL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xE996735927E427A733BB653E374C7797FB006459" | sudo apt-key add -
-      sudo add-apt-repository -y "deb http://ppa.launchpad.net/savoury1/virtualisation/ubuntu $(lsb_release -cs) main"
     sh -x -c "docker --version"
     echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
 
@@ -51,7 +49,7 @@
 .script-bootstrap-ansible: &script-bootstrap-ansible
   - |
     if ! [[ -x "$(command -v ansible)" ]]; then
-      sudo -E pipx install --force --pip-args='--upgrade' --include-deps 'ansible>=2.10.3,<2.11.0'
+      sudo -E pipx install --force --pip-args='--upgrade' --include-deps 'ansible>=4.0.0,<5.0.0'
       sudo -E pipx inject --force --pip-args='--upgrade' --include-apps ansible ansible-lint
       sudo -E pipx inject --force --pip-args='--upgrade' ansible docker netaddr python-vagrant
     fi
