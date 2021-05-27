@@ -27,7 +27,6 @@
     fi
     sudo systemctl start docker.service
     sh -x -c "docker --version"
-    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
 
 .script-bootstrap-python: &script-bootstrap-python
   - |
@@ -64,6 +63,7 @@
 
 .script-packer-build: &script-packer-build
   - |
+    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     packer build packer.json
 
