@@ -4,12 +4,12 @@
 
 set -euxo pipefail
 
-# Prepend executable if command starts with an option
+# Prepend executable if command starts with an option.
 if [ "${1:0:1}" = '-' ]; then
     set -- start-bamboo.sh "$@"
 fi
 
-# Allow the container to be stated with `--user`
+# Allow the container to be stated with `--user`.
 if [ "$1" = 'start-bamboo.sh' ] && [ "$(id -u)" = '0' ]; then
     mkdir -p $BAMBOO_HOME $BAMBOO_HOME/shared
     chown $BAMBOO_OWNER:$BAMBOO_GROUP $BAMBOO_HOME $BAMBOO_HOME/shared
@@ -17,7 +17,7 @@ if [ "$1" = 'start-bamboo.sh' ] && [ "$(id -u)" = '0' ]; then
     exec gosu $BAMBOO_OWNER "$BASH_SOURCE" "$@"
 fi
 
-# Verify configuration with Ansible
+# Verify configuration with Ansible.
 if [ "$1" = 'start-bamboo.sh' ]; then
     ansible-playbook /etc/ansible/playbooks/verify.yml
 fi

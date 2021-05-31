@@ -82,6 +82,52 @@
       include_role:
         name: gosu
 
+    - name: groupadd
+      group:
+        name: "{{ bamboo_group }}"
+        system: true
+        state: "present"
+
+    - name: useradd
+      user:
+        name: "{{ bamboo_owner }}"
+        group: "{{ bamboo_group }}"
+        home: "{{ bamboo_home }}"
+        shell: "/usr/sbin/nologin"
+        system: true
+        create_home: false
+        state: "present"
+
+    - name: prepare directories
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0755') }}"
+        state: "{{ item.state | default('directory') }}"
+      loop:
+        - { dest: "/etc/sudoers.d" }
+
+    - name: copy templates
+      template:
+        dest: "{{ item.dest }}"
+        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+      loop:
+        - { dest: "/etc/sudoers.d/bamboo", mode: "0400" }
+
+    - name: prepare files
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+        state: "{{ item.state | default('file') }}"
+      loop:
+        - { dest: "/etc/sudoers.d/bamboo", mode: "0400" }
+    
     - name: include role
       include_role:
         name: cvs
@@ -141,62 +187,3 @@
     - name: include role
       include_role:
         name: bamboo
-
-    - name: apt-get install
-      apt:
-        name: "{{ item.name }}"
-        state: "{{ item.state }}"
-      loop:
-        - { state: "latest", name: "rsync" }
-        - { state: "latest", name: "sudo" }
-      register: result
-      until: result is succeeded
-
-    - name: prepare directories
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0755') }}"
-        state: "{{ item.state | default('directory') }}"
-      loop:
-        - { dest: "/etc/ansible" }
-        - { dest: "/etc/ansible/group_vars/all" }
-        - { dest: "/etc/ansible/playbooks" }
-        - { dest: "/etc/ansible/roles" }
-        - { dest: "/etc/sudoers.d" }
-
-    - name: rsync directories
-      synchronize:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        archive: true
-        delete: true
-      loop:
-        - { src: "../inventory/default/", dest: "/etc/ansible" }
-        - { src: "../roles/", dest: "/etc/ansible/roles" }
-        - { src: "../playbooks/", dest: "/etc/ansible/playbooks" }
-
-    - name: copy templates
-      template:
-        dest: "{{ item.dest }}"
-        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-      loop:
-        - { dest: "/etc/ansible/ansible.cfg" }
-        - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
-        - { dest: "/etc/sudoers.d/bamboo" }
-
-    - name: prepare files
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-        state: "{{ item.state | default('file') }}"
-      loop:
-        - { dest: "/etc/ansible/ansible.cfg" }
-        - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
-        - { dest: "/etc/sudoers.d/bamboo" }
