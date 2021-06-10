@@ -156,7 +156,11 @@
 
     - name: include role
       include_role:
-        name: cni_plugins
+        name: containernetworking_plugins
+
+    - name: include role
+      include_role:
+        name: fuse_overlayfs
 
     - name: include role
       include_role:
