@@ -14,10 +14,6 @@
 	path = roles/catatonit
 	url = https://github.com/alvistack/ansible-role-catatonit.git
 	branch = develop
-[submodule "roles/cni_plugins"]
-	path = roles/cni_plugins
-	url = https://github.com/alvistack/ansible-role-cni_plugins.git
-	branch = develop
 [submodule "roles/conmon"]
 	path = roles/conmon
 	url = https://github.com/alvistack/ansible-role-conmon.git
@@ -81,4 +77,8 @@
 [submodule "roles/timezone"]
 	path = roles/timezone
 	url = https://github.com/alvistack/ansible-role-timezone.git
+	branch = develop
+[submodule "roles/containernetworking_plugins"]
+	path = roles/containernetworking_plugins
+	url = git@github.com:alvistack/ansible-role-containernetworking_plugins.git
 	branch = develop
