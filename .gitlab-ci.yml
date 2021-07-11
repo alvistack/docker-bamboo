@@ -81,7 +81,7 @@
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _IMAGE="$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION"
     docker load --input output-docker/image.tar.gz
-    export _ID=$(docker images | awk '{ print $3 }' | awk 'NR=="2')"
+    export _ID="$(docker images | awk '{ print $3 }' | awk 'NR==2')"
     docker tag $_ID $_ORG/$_IMAGE:latest
     docker push $_ORG/$_IMAGE:latest
     docker tag $_ID $_ORG/$_IMAGE:$_TAG
