@@ -3,7 +3,7 @@
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-bamboo/master)](https://gitlab.com/alvistack/docker-bamboo/-/pipelines)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/blob/master/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo-7.2.svg)](https://hub.docker.com/r/alvistack/bamboo-7.2)
+[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo-8.0.svg)](https://hub.docker.com/r/alvistack/bamboo-8.0)
 
 Bamboo is a continuous integration (CI) server that can be used to automate the release management for a software application, creating a continuous delivery pipeline.
 
@@ -11,10 +11,10 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective Packer Template Links
 
+  - [`alvistack/bamboo-8.0`](https://hub.docker.com/r/alvistack/bamboo-8.0)
+      - [`packer/docker-8.0/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-8.0/packer.json)
   - [`alvistack/bamboo-7.2`](https://hub.docker.com/r/alvistack/bamboo-7.2)
       - [`packer/docker-7.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-7.2/packer.json)
-  - [`alvistack/bamboo-7.1`](https://hub.docker.com/r/alvistack/bamboo-7.1)
-      - [`packer/docker-7.1/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-7.1/packer.json)
 
 ## Overview
 
@@ -34,7 +34,7 @@ Volume permission is NOT managed by entry scripts. To get started you can use a 
 Start Atlassian Bamboo Server:
 
     # Pull latest image
-    docker pull alvistack/bamboo-7.2
+    docker pull alvistack/bamboo-8.0
     
     # Run as detach
     docker run \
@@ -43,7 +43,7 @@ Start Atlassian Bamboo Server:
         --publish 8085:8085 \
         --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
         --privileged \
-        alvistack/bamboo-7.2
+        alvistack/bamboo-8.0
 
 **Success**. Bamboo is now available on <http://localhost:8085>
 
@@ -67,7 +67,7 @@ Start Atlassian Bamboo Remote Agent:
         --publish 8085:8085 \
         --volume /var/atlassian/application-data/bamboo:/var/atlassian/application-data/bamboo \
         --privileged \
-        alvistack/bamboo-7.2 \
+        alvistack/bamboo-8.0 \
         java -jar /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar http://bamboo-host-server:8085/bamboo/agentServer/
 
 ### Run Build with Podman
