@@ -58,6 +58,22 @@
   loop:
     - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
 
+- name: groupadd
+  group:
+    name: "{{ bamboo_group }}"
+    system: true
+    state: "present"
+
+- name: useradd
+  user:
+    name: "{{ bamboo_owner }}"
+    group: "{{ bamboo_group }}"
+    home: "{{ bamboo_home }}"
+    shell: "/usr/sbin/nologin"
+    system: true
+    create_home: false
+    state: "present"
+
 - name: prepare directories
   file:
     dest: "{{ item.dest }}"
@@ -66,6 +82,7 @@
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
+    - { dest: "/etc/sudoers.d" }
     - { dest: "/usr/local/bin" }
 
 - name: copy templates
@@ -76,6 +93,7 @@
     group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
+    - { dest: "/etc/sudoers.d/bamboo", mode: "0400" }
     - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
 - name: prepare files
@@ -86,4 +104,5 @@
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:
+    - { dest: "/etc/sudoers.d/bamboo", mode: "0400" }
     - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
