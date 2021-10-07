@@ -41,7 +41,7 @@
         "set -eu",
         "apt-get update",
         "DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
-        "DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc iproute2 language-pack-en locales python3 python3-dev sudo"
+        "DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc iproute2 language-pack-en locales python3  sudo"
       ],
       "type": "shell"
     },

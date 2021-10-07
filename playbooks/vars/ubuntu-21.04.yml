@@ -22,7 +22,6 @@ _apt:
   - { state: "latest", name: "make" }
   - { state: "latest", name: "passwd" }
   - { state: "latest", name: "python3" }
-  - { state: "latest", name: "python3-dev" }
   - { state: "latest", name: "rsync" }
   - { state: "latest", name: "sudo" }
   - { state: "latest", name: "util-linux" }
