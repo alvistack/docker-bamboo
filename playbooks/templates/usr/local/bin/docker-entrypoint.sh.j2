@@ -9,6 +9,12 @@ if [ "${1:0:1}" = '-' ]; then
     set -- start-bamboo.sh "$@"
 fi
 
+# Modify Ansible inventory with active hostname.
+if [ "$(id -u)" = '0' ]; then
+    _HOSTNAME="$(hostname -s)"
+    sed -i "s/localhost/$_HOSTNAME/g" /etc/ansible/hosts
+fi
+
 # Allow the container to be stated with `--user`.
 if [ "$1" = 'start-bamboo.sh' ] && [ "$(id -u)" = '0' ]; then
     mkdir -p $BAMBOO_HOME $BAMBOO_HOME/shared
@@ -19,8 +25,6 @@ fi
 
 # Verify configuration with Ansible.
 if [ "$1" = 'start-bamboo.sh' ]; then
-    _HOSTNAME="$(hostname -s)"
-    sed -i "s/localhost/${_HOSTNAME}/g" /etc/ansible/hosts
     ansible-playbook /etc/ansible/playbooks/verify.yml
 fi
 
