@@ -106,11 +106,11 @@
 
     - name: include role
       include_role:
-        name: docker
+        name: runc
 
     - name: include role
       include_role:
-        name: containernetworking_plugins
+        name: crun
 
     - name: include role
       include_role:
@@ -118,7 +118,7 @@
 
     - name: include role
       include_role:
-        name: runc
+        name: containernetworking_plugins
 
     - name: include role
       include_role:
