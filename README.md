@@ -3,7 +3,7 @@
 <img src="/alvistack.svg" width="75" alt="AlviStack">
 
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-bamboo/master)](https://gitlab.com/alvistack/docker-bamboo/-/pipelines)
-[![GitHub release](https://img.shields.io/github/release/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/releases)
+[![GitHub tag](https://img.shields.io/github/tag/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/tags)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/bamboo-8.1.svg)](https://hub.docker.com/r/alvistack/bamboo-8.1)
 
@@ -102,7 +102,7 @@ For evaluations you can use the built-in database that will store its files in t
 
 ### `YYYYMMDD.Y.Z`
 
-Release tags could be find from [GitHub Release](https://github.com/alvistack/docker-bamboo/releases) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
+Release tags could be find from [GitHub Release](https://github.com/alvistack/docker-bamboo/tags) of this repository. Thus using these tags will ensure you are running the most up to date stable version of this image.
 
 ### `YYYYMMDD.0.0`
 
