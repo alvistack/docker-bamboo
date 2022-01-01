@@ -16,16 +16,16 @@
     fi
     sh -x -c "packer --version"
 
-.script-bootstrap-docker: &script-bootstrap-docker
+.script-bootstrap-podman: &script-bootstrap-podman
   - |
-    if ! [[ -x "$(command -v docker)" ]]; then
+    if ! [[ -x "$(command -v podman)" ]]; then
       export DEBIAN_FRONTEND="noninteractive"
       echo "deb http://download.opensuse.org/repositories/home:/alvistack/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
       curl -fsSL https://download.opensuse.org/repositories/home:alvistack/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
       sudo -E apt-get update
       sudo -E apt-get install -y buildah conmon containernetworking-plugins containers-common crun fuse-overlayfs podman podman-docker runc skopeo
     fi
-    sh -x -c "docker --version"
+    sh -x -c "podman --version"
 
 .script-bootstrap-python: &script-bootstrap-python
   - |
@@ -61,11 +61,11 @@
 
 .script-packer-build: &script-packer-build
   - |
-    echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+    echo $DOCKER_HUB_TOKEN | sudo podman login --username=$DOCKER_HUB_USERNAME --password-stdin
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
-    sudo packer build packer.json
+    sudo -E packer build packer.json
 
-.script-docker-push: &script-docker-push
+.script-podman-push: &script-podman-push
   - |
     if [[ -n "$CI_COMMIT_TAG" ]] && [[ "$CI_COMMIT_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
       export _TAG="$CI_COMMIT_TAG"
@@ -74,30 +74,30 @@
     else
       exit 0
     fi
-    echo $DOCKER_HUB_TOKEN | sudo docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+    echo $DOCKER_HUB_TOKEN | sudo podman login --username=$DOCKER_HUB_USERNAME --password-stdin
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _IMAGE="$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION"
-    sudo docker load --input output-docker/image.tar.gz
-    export _ID="$(sudo docker images | awk '{ print $3 }' | awk 'NR==2')"
-    sudo docker tag $_ID $_ORG/$_IMAGE:latest
-    sudo docker push $_ORG/$_IMAGE:latest
-    sudo docker tag $_ID $_ORG/$_IMAGE:$_TAG
-    sudo docker push $_ORG/$_IMAGE:$_TAG
+    sudo podman load --input output-docker/image.tar.gz
+    export _ID="$(sudo podman images | awk '{ print $3 }' | awk 'NR==2')"
+    sudo podman tag $_ID $_ORG/$_IMAGE:latest
+    sudo podman push $_ORG/$_IMAGE:latest
+    sudo podman tag $_ID $_ORG/$_IMAGE:$_TAG
+    sudo podman push $_ORG/$_IMAGE:$_TAG
 
 .job-packer-build: &job-packer-build
   script:
     - *script-bootstrap-packer
-    - *script-bootstrap-docker
+    - *script-bootstrap-podman
     - *script-bootstrap-python
     - *script-bootstrap-ansible
     - *script-linters
     - *script-packer-build
 
-.job-docker-push: &job-docker-push
+.job-podman-push: &job-podman-push
   script:
-    - *script-bootstrap-docker
-    - *script-docker-push
+    - *script-bootstrap-podman
+    - *script-podman-push
 
 default:
   retry: 2
@@ -116,7 +116,7 @@ build:docker-8.1:
     _PACKER_BUILDER_VERSION: "8.1"
 
 deploy:docker-8.1:
-  <<: *job-docker-push
+  <<: *job-podman-push
   stage: deploy
   cache:
     key: "$CI_PIPELINE_ID-docker-8.1"
@@ -141,7 +141,7 @@ build:docker-8.0:
     _PACKER_BUILDER_VERSION: "8.0"
 
 deploy:docker-8.0:
-  <<: *job-docker-push
+  <<: *job-podman-push
   stage: deploy
   cache:
     key: "$CI_PIPELINE_ID-docker-8.0"
