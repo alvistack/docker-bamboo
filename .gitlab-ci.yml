@@ -63,7 +63,7 @@
   - |
     echo $DOCKER_HUB_TOKEN | sudo podman login --username=$DOCKER_HUB_USERNAME --password-stdin
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
-    sudo packer build packer.json
+    sudo -E packer build packer.json
 
 .script-podman-push: &script-podman-push
   - |
