@@ -34,6 +34,10 @@
 	path = roles/cvs
 	url = https://github.com/alvistack/ansible-role-cvs.git
 	branch = develop
+[submodule "roles/docker"]
+	path = roles/docker
+	url = https://github.com/alvistack/ansible-role-docker.git
+	branch = develop
 [submodule "roles/git"]
 	path = roles/git
 	url = https://github.com/alvistack/ansible-role-git.git

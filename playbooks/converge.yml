@@ -106,6 +106,10 @@
 
     - name: include role
       include_role:
+        name: docker
+
+    - name: include role
+      include_role:
         name: runc
 
     - name: include role
