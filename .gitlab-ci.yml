@@ -39,8 +39,9 @@
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/docker.gpg > /dev/null
       sudo -E apt-get update
       sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
-      sudo systemctl start docker.service
     fi
+    sudo systemctl start docker.service
+    sh -x -c "sudo systemctl status --no-pager docker.service"
     sh -x -c "docker --version"
 
 .script-bootstrap-packer: &script-bootstrap-packer
