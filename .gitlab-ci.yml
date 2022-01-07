@@ -5,29 +5,6 @@
     git submodule sync --recursive
     git submodule update --init --recursive
 
-.script-bootstrap-packer: &script-bootstrap-packer
-  - |
-    if ! [[ -x "$(command -v packer)" ]]; then
-      export DEBIAN_FRONTEND="noninteractive"
-      echo "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-      curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/hashicorp.gpg > /dev/null
-      sudo -E apt-get update
-      sudo -E apt-get install -y packer
-    fi
-    sh -x -c "packer --version"
-
-.script-bootstrap-docker: &script-bootstrap-docker
-  - |
-    if ! [[ -x "$(command -v docker)" ]]; then
-      export DEBIAN_FRONTEND="noninteractive"
-      echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/docker.gpg > /dev/null
-      sudo -E apt-get update
-      sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
-    fi
-    sudo systemctl start docker.service
-    sh -x -c "docker --version"
-
 .script-bootstrap-python: &script-bootstrap-python
   - |
     if ! [[ -x "$(command -v pipx)" ]]; then
@@ -53,6 +30,29 @@
     fi
     sh -x -c "ansible --version"
     sh -x -c "ansible-lint --version"
+
+.script-bootstrap-docker: &script-bootstrap-docker
+  - |
+    if ! [[ -x "$(command -v docker)" ]]; then
+      export DEBIAN_FRONTEND="noninteractive"
+      echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/docker.gpg > /dev/null
+      sudo -E apt-get update
+      sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
+      sudo systemctl start docker.service
+    fi
+    sh -x -c "docker --version"
+
+.script-bootstrap-packer: &script-bootstrap-packer
+  - |
+    if ! [[ -x "$(command -v packer)" ]]; then
+      export DEBIAN_FRONTEND="noninteractive"
+      echo "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+      curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/hashicorp.gpg > /dev/null
+      sudo -E apt-get update
+      sudo -E apt-get install -y packer
+    fi
+    sh -x -c "packer --version"
 
 .script-linters: &script-linters
   - |
@@ -88,10 +88,10 @@
 
 .job-packer-build: &job-packer-build
   script:
-    - *script-bootstrap-packer
-    - *script-bootstrap-docker
     - *script-bootstrap-python
     - *script-bootstrap-ansible
+    - *script-bootstrap-docker
+    - *script-bootstrap-packer
     - *script-linters
     - *script-packer-build
 
