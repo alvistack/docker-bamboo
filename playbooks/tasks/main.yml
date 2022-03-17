@@ -15,10 +15,10 @@
 # limitations under the License.
 
 - name: prepare directories
-  file:
+  ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
@@ -39,46 +39,46 @@
     - { dest: "/etc/ansible/roles", src: "../roles/" }
 
 - name: copy templates
-  template:
+  ansible.builtin.template:
     dest: "{{ item.dest }}"
     src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
 
 - name: prepare files
-  file:
+  ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:
     - { dest: "/etc/ansible/group_vars/all/99-packer.yml" }
 
 - name: groupadd
-  group:
+  ansible.builtin.group:
     name: "{{ bamboo_group }}"
     system: true
     state: "present"
 
 - name: useradd
-  user:
+  ansible.builtin.user:
     name: "{{ bamboo_owner }}"
-    group: "{{ bamboo_group }}"
+    ansible.builtin.group: "{{ bamboo_group }}"
     home: "{{ bamboo_home }}"
-    shell: "/usr/sbin/nologin"
+    ansible.builtin.shell: "/usr/sbin/nologin"
     system: true
     create_home: false
     state: "present"
 
 - name: prepare directories
-  file:
+  ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
@@ -86,21 +86,21 @@
     - { dest: "/usr/local/bin" }
 
 - name: copy templates
-  template:
+  ansible.builtin.template:
     dest: "{{ item.dest }}"
     src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/sudoers.d/bamboo", mode: "0400" }
     - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
 - name: prepare files
-  file:
+  ansible.builtin.file:
     dest: "{{ item.dest }}"
     owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    ansible.builtin.group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:
