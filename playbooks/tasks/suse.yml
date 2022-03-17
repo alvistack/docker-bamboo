@@ -15,7 +15,7 @@
 # limitations under the License.
 
 - name: rm -rf /etc/zypp/repos.d/*
-  raw: |
+  ansible.builtin.raw: |
     set -eu
     rm -rf /etc/zypp/repos.d/*
   changed_when: false
@@ -38,7 +38,7 @@
 - name: zypper install
   vars:
     ansible_python_interpreter: "python3"
-  zypper:
+  ansible.builtin.zypper:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   loop: "{{ _zypper }}"
