@@ -104,6 +104,31 @@ default:
   before_script:
     - *script-git-submodule
 
+build:docker-8.2:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-docker-8.2"
+    paths:
+      - packer/*/output-docker
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "8.2"
+
+deploy:docker-8.2:
+  <<: *job-docker-push
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-docker-8.2"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "8.2"
+  needs:
+    - build:docker-8.2
+
 build:docker-8.1:
   <<: *job-packer-build
   stage: build
@@ -128,28 +153,3 @@ deploy:docker-8.1:
     _PACKER_BUILDER_VERSION: "8.1"
   needs:
     - build:docker-8.1
-
-build:docker-8.0:
-  <<: *job-packer-build
-  stage: build
-  cache:
-    key: "$CI_PIPELINE_ID-docker-8.0"
-    paths:
-      - packer/*/output-docker
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "8.0"
-
-deploy:docker-8.0:
-  <<: *job-docker-push
-  stage: deploy
-  cache:
-    key: "$CI_PIPELINE_ID-docker-8.0"
-    paths:
-      - packer/*/output-docker
-    policy: pull
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "8.0"
-  needs:
-    - build:docker-8.0
