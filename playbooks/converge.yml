@@ -106,10 +106,6 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: docker
-
-    - name: include role
-      ansible.builtin.include_role:
         name: runc
 
     - name: include role

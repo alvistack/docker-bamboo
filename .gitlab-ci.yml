@@ -35,13 +35,11 @@
   - |
     if ! [[ -x "$(command -v docker)" ]]; then
       export DEBIAN_FRONTEND="noninteractive"
-      echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/docker.gpg > /dev/null
+      echo "deb http://download.opensuse.org/repositories/home:/alvistack/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
+      curl -fsSL https://download.opensuse.org/repositories/home:alvistack/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
       sudo -E apt-get update
-      sudo -E apt-get -y install containerd.io docker-ce docker-ce-cli
+      sudo -E apt-get install -y crun podman podman-docker
     fi
-    sudo systemctl start docker.service
-    sh -x -c "sudo systemctl status --no-pager docker.service"
     sh -x -c "docker --version"
 
 .script-bootstrap-packer: &script-bootstrap-packer
@@ -63,9 +61,9 @@
 
 .script-packer-build: &script-packer-build
   - |
-    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+    echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
-    packer build packer.json
+    sudo -E packer build packer.json
 
 .script-docker-push: &script-docker-push
   - |
@@ -76,16 +74,16 @@
     else
       exit 0
     fi
-    echo $DOCKER_HUB_TOKEN | docker login --username=$DOCKER_HUB_USERNAME --password-stdin
+    echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _IMAGE="$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION"
-    docker load --input output-docker/image.tar.gz
-    export _ID="$(docker images | awk '{ print $3 }' | awk 'NR==2')"
-    docker tag $_ID $_ORG/$_IMAGE:latest
-    docker push $_ORG/$_IMAGE:latest
-    docker tag $_ID $_ORG/$_IMAGE:$_TAG
-    docker push $_ORG/$_IMAGE:$_TAG
+    sudo -E docker load --input output-docker/image.tar.gz
+    export _ID="$(sudo -E docker images | awk '{ print $3 }' | awk 'NR==2')"
+    sudo -E docker tag $_ID $_ORG/$_IMAGE:latest
+    sudo -E docker push $_ORG/$_IMAGE:latest
+    sudo -E docker tag $_ID $_ORG/$_IMAGE:$_TAG
+    sudo -E docker push $_ORG/$_IMAGE:$_TAG
 
 .job-packer-build: &job-packer-build
   script:
