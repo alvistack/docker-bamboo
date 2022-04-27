@@ -1,84 +1,84 @@
-[submodule "roles/ansible"]
-	path = roles/ansible
+[submodule "roles/alvistack.ansible"]
+	path = roles/alvistack.ansible
 	url = https://github.com/alvistack/ansible-role-ansible.git
 	branch = develop
-[submodule "roles/bamboo"]
-	path = roles/bamboo
+[submodule "roles/alvistack.bamboo"]
+	path = roles/alvistack.bamboo
 	url = https://github.com/alvistack/ansible-role-bamboo.git
 	branch = develop
-[submodule "roles/buildah"]
-	path = roles/buildah
+[submodule "roles/alvistack.buildah"]
+	path = roles/alvistack.buildah
 	url = https://github.com/alvistack/ansible-role-buildah.git
 	branch = develop
-[submodule "roles/catatonit"]
-	path = roles/catatonit
+[submodule "roles/alvistack.catatonit"]
+	path = roles/alvistack.catatonit
 	url = https://github.com/alvistack/ansible-role-catatonit.git
 	branch = develop
-[submodule "roles/conmon"]
-	path = roles/conmon
+[submodule "roles/alvistack.conmon"]
+	path = roles/alvistack.conmon
 	url = https://github.com/alvistack/ansible-role-conmon.git
 	branch = develop
-[submodule "roles/containernetworking_plugins"]
-	path = roles/containernetworking_plugins
+[submodule "roles/alvistack.containernetworking_plugins"]
+	path = roles/alvistack.containernetworking_plugins
 	url = https://github.com/alvistack/ansible-role-containernetworking_plugins.git
 	branch = develop
-[submodule "roles/containers_common"]
-	path = roles/containers_common
+[submodule "roles/alvistack.containers_common"]
+	path = roles/alvistack.containers_common
 	url = https://github.com/alvistack/ansible-role-containers_common.git
 	branch = develop
-[submodule "roles/crun"]
-	path = roles/crun
+[submodule "roles/alvistack.crun"]
+	path = roles/alvistack.crun
 	url = https://github.com/alvistack/ansible-role-crun.git
 	branch = develop
-[submodule "roles/cvs"]
-	path = roles/cvs
+[submodule "roles/alvistack.cvs"]
+	path = roles/alvistack.cvs
 	url = https://github.com/alvistack/ansible-role-cvs.git
 	branch = develop
-[submodule "roles/git"]
-	path = roles/git
+[submodule "roles/alvistack.git"]
+	path = roles/alvistack.git
 	url = https://github.com/alvistack/ansible-role-git.git
 	branch = develop
-[submodule "roles/gosu"]
-	path = roles/gosu
+[submodule "roles/alvistack.gosu"]
+	path = roles/alvistack.gosu
 	url = https://github.com/alvistack/ansible-role-gosu.git
 	branch = develop
-[submodule "roles/locales"]
-	path = roles/locales
+[submodule "roles/alvistack.locales"]
+	path = roles/alvistack.locales
 	url = https://github.com/alvistack/ansible-role-locales.git
 	branch = develop
-[submodule "roles/mercurial"]
-	path = roles/mercurial
+[submodule "roles/alvistack.mercurial"]
+	path = roles/alvistack.mercurial
 	url = https://github.com/alvistack/ansible-role-mercurial.git
 	branch = develop
-[submodule "roles/openjdk"]
-	path = roles/openjdk
+[submodule "roles/alvistack.openjdk"]
+	path = roles/alvistack.openjdk
 	url = https://github.com/alvistack/ansible-role-openjdk.git
 	branch = develop
-[submodule "roles/perforce"]
-	path = roles/perforce
+[submodule "roles/alvistack.perforce"]
+	path = roles/alvistack.perforce
 	url = https://github.com/alvistack/ansible-role-perforce.git
 	branch = develop
-[submodule "roles/podman"]
-	path = roles/podman
+[submodule "roles/alvistack.podman"]
+	path = roles/alvistack.podman
 	url = https://github.com/alvistack/ansible-role-podman.git
 	branch = develop
-[submodule "roles/python"]
-	path = roles/python
+[submodule "roles/alvistack.python"]
+	path = roles/alvistack.python
 	url = https://github.com/alvistack/ansible-role-python.git
 	branch = develop
-[submodule "roles/runc"]
-	path = roles/runc
+[submodule "roles/alvistack.runc"]
+	path = roles/alvistack.runc
 	url = https://github.com/alvistack/ansible-role-runc.git
 	branch = develop
-[submodule "roles/skopeo"]
-	path = roles/skopeo
+[submodule "roles/alvistack.skopeo"]
+	path = roles/alvistack.skopeo
 	url = https://github.com/alvistack/ansible-role-skopeo.git
 	branch = develop
-[submodule "roles/svn"]
-	path = roles/svn
+[submodule "roles/alvistack.svn"]
+	path = roles/alvistack.svn
 	url = https://github.com/alvistack/ansible-role-svn.git
 	branch = develop
-[submodule "roles/timezone"]
-	path = roles/timezone
+[submodule "roles/alvistack.timezone"]
+	path = roles/alvistack.timezone
 	url = https://github.com/alvistack/ansible-role-timezone.git
 	branch = develop
