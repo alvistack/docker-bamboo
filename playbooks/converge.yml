@@ -106,10 +106,6 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.runc
-
-    - name: include role
-      ansible.builtin.include_role:
         name: alvistack.crun
 
     - name: include role
