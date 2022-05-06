@@ -62,80 +62,80 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.python
+        name: python
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.ansible
+        name: ansible
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.locales
+        name: locales
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.timezone
+        name: timezone
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.catatonit
+        name: catatonit
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.gosu
+        name: gosu
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.cvs
+        name: cvs
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.svn
+        name: svn
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.git
+        name: git
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.mercurial
+        name: mercurial
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.perforce
+        name: perforce
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.crun
+        name: crun
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.containers_common
+        name: containers_common
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.containernetworking_plugins
+        name: containernetworking_plugins
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.conmon
+        name: conmon
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.skopeo
+        name: skopeo
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.buildah
+        name: buildah
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.podman
+        name: podman
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.openjdk
+        name: openjdk
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.bamboo
+        name: bamboo
