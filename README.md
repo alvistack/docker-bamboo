@@ -1,6 +1,6 @@
 # Docker Image Packaging for Atlassian Bamboo
 
-<img src="/alvistack.svg" width="75" alt="AlviStack">
+<a href="https://alvistack.com" title="AlviStack" target="_blank"><img src="/alvistack.svg" height="75" alt="AlviStack"></a>
 
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-bamboo/master)](https://gitlab.com/alvistack/docker-bamboo/-/pipelines)
 [![GitHub tag](https://img.shields.io/github/tag/alvistack/docker-bamboo.svg)](https://github.com/alvistack/docker-bamboo/tags)
