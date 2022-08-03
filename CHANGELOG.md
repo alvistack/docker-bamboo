@@ -4,6 +4,11 @@
 
 ### Major Changes
 
+## 20220803.1.1 - 2022-08-03
+
+### Major Changes
+
+  - Support Ansible community package 6.2.0
   - Revamp manually download related with OBS repo
 
 ## 20220714.1.1 - 2022-07-14
