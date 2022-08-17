@@ -78,7 +78,7 @@
     cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG="$CI_PROJECT_NAMESPACE"
     export _IMAGE="$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION"
-    sudo -E docker load --input output-docker/image.tar.gz
+    zcat output-docker/image.tar.gz | sudo -E docker load
     export _ID="$(sudo -E docker images | awk '{ print $3 }' | awk 'NR==2')"
     sudo -E docker tag $_ID $_ORG/$_IMAGE:latest
     sudo -E docker push $_ORG/$_IMAGE:latest
