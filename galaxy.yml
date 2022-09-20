@@ -15,7 +15,7 @@
 # limitations under the License.
 
 namespace: alvistack
-name: docker-bamboo
+name: bamboo
 description: Docker Image Packaging for Atlassian Bamboo
 
 version: 0.0.0
