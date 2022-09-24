@@ -14,30 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-_rpm_key:
-  - key: "http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
-    fingerprint: "FF8AD1344597106ECE813B918A3872BF3228467C"
-    state: "present"
-
-_rpm_download:
-  - url: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
-    dest: "/var/cache/ansible/2a129575a75ec26d95b1e1ec0f8c87269df9ebec111959d1acd461de074ea87c/epel-release-latest-9.noarch.rpm"
-    checksum: "2a129575a75ec26d95b1e1ec0f8c87269df9ebec111959d1acd461de074ea87c"
-
-_yum_config_manager:
-  - { state: "enable", name: "baseos" }
-  - { state: "enable", name: "extras-common" }
-  - { state: "enable", name: "appstream" }
-  - { state: "enable", name: "crb" }
-
-_yum:
+_apt:
   - { state: "latest", name: "ca-certificates" }
   - { state: "latest", name: "curl" }
   - { state: "latest", name: "gcc" }
-  - { state: "latest", name: "iproute" }
+  - { state: "latest", name: "iproute2" }
   - { state: "latest", name: "make" }
+  - { state: "latest", name: "passwd" }
   - { state: "latest", name: "python3" }
   - { state: "latest", name: "rsync" }
-  - { state: "latest", name: "shadow-utils" }
   - { state: "latest", name: "sudo" }
   - { state: "latest", name: "util-linux" }
