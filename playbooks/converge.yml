@@ -142,15 +142,16 @@
         name: bamboo
 
     - name: symlink files
-      ansible.builtin.shell: |
-        set -euxo pipefail
-        cd /opt/atlassian/bamboo/lib
-        rm -rf *postgresql*.jar
-        cp -rfp /usr/share/java/postgresql-*.jar .
-        rm -rf *mysql-connector-java*.jar
-        cp -rfp /usr/share/java/mysql-connector-java-*.jar .
-        chown -Rf bamboo:bamboo *.jar
-        chmod 0644 *.jar
+      ansible.builtin.shell:
+        cmd: |
+          set -euxo pipefail
+          cd /opt/atlassian/bamboo/lib
+          rm -rf *postgresql*.jar
+          cp -rfp /usr/share/java/postgresql-*.jar .
+          rm -rf *mysql-connector-java*.jar
+          cp -rfp /usr/share/java/mysql-connector-java-*.jar .
+          chown -Rf bamboo:bamboo *.jar
+          chmod 0644 *.jar
       args:
         executable: "/bin/bash"
       changed_when: false
