@@ -31,6 +31,17 @@
     sh -x -c "ansible --version"
     sh -x -c "ansible-lint --version"
 
+.script-bootstrap-molecule: &script-bootstrap-molecule
+  - |
+    if ! [[ -x "$(command -v molecule)" ]]; then
+      export DEBIAN_FRONTEND="noninteractive"
+      echo "deb http://downloadcontent.opensuse.org/repositories/home:/alvistack/xUbuntu_22.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
+      curl -fsSL https://downloadcontent.opensuse.org/repositories/home:alvistack/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
+      sudo -E apt-get update
+      sudo -E apt-get install -y python3-molecule python3-molecule-docker python3-molecule-vagrant
+    fi
+    sh -x -c "molecule --version"
+
 .script-bootstrap-docker: &script-bootstrap-docker
   - |
     if ! [[ -x "$(command -v docker)" ]]; then
@@ -62,8 +73,20 @@
 .script-packer-build: &script-packer-build
   - |
     echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    cd $CI_PROJECT_DIR/packer/$_IMAGE-$_PROVIDER
     sudo -E packer build packer.json
+
+.script-docker-load: &script-docker-load
+  - |
+    zcat $CI_PROJECT_DIR/packer/$_IMAGE-$_PROVIDER/output-docker/image.tar.gz | sudo -E docker load
+    export _ORG="$CI_PROJECT_NAMESPACE"
+    export _ID="$(sudo -E docker images | awk '{ print $3 }' | awk 'NR==2')"
+    sudo -E docker tag $_ID $_ORG/$_IMAGE:latest
+
+.script-molecule-test: &script-molecule-test
+  - |
+    export _MOLECULE_INSTANCE_NAME="$(pwgen -1AB 12)"
+    sudo -E molecule test -s $_IMAGE-$_PROVIDER
 
 .script-docker-push: &script-docker-push
   - |
@@ -75,10 +98,7 @@
       exit 0
     fi
     echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG="$CI_PROJECT_NAMESPACE"
-    export _IMAGE="$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION"
-    zcat output-docker/image.tar.gz | sudo -E docker load
     export _ID="$(sudo -E docker images | awk '{ print $3 }' | awk 'NR==2')"
     sudo -E docker tag $_ID $_ORG/$_IMAGE:latest
     sudo -E docker push $_ORG/$_IMAGE:latest
@@ -94,9 +114,19 @@
     - *script-linters
     - *script-packer-build
 
+.job-molecule-test: &job-molecule-test
+  script:
+    - *script-bootstrap-python
+    - *script-bootstrap-ansible
+    - *script-bootstrap-molecule
+    - *script-bootstrap-docker
+    - *script-docker-load
+    - *script-molecule-test
+
 .job-docker-push: &job-docker-push
   script:
     - *script-bootstrap-docker
+    - *script-docker-load
     - *script-docker-push
 
 default:
@@ -104,52 +134,80 @@ default:
   before_script:
     - *script-git-submodule
 
-build:docker-9.0:
+build:bamboo-9.0-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-docker-9.0"
+    key: "$CI_PIPELINE_ID-bamboo-9.0-docker"
     paths:
       - packer/*/output-docker
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "9.0"
+    _IMAGE: "bamboo-9.0"
+    _PROVIDER: "docker"
 
-deploy:docker-9.0:
-  <<: *job-docker-push
-  stage: deploy
+test:bamboo-9.0-docker:
+  <<: *job-molecule-test
+  stage: test
   cache:
-    key: "$CI_PIPELINE_ID-docker-9.0"
+    key: "$CI_PIPELINE_ID-bamboo-9.0-docker"
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "9.0"
+    _IMAGE: "bamboo-9.0"
+    _PROVIDER: "docker"
   needs:
-    - build:docker-9.0
+    - build:bamboo-9.0-docker
 
-build:docker-8.2:
-  <<: *job-packer-build
-  stage: build
-  cache:
-    key: "$CI_PIPELINE_ID-docker-8.2"
-    paths:
-      - packer/*/output-docker
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "8.2"
-
-deploy:docker-8.2:
+deploy:bamboo-9.0-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-docker-8.2"
+    key: "$CI_PIPELINE_ID-bamboo-9.0-docker"
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "8.2"
+    _IMAGE: "bamboo-9.0"
+    _PROVIDER: "docker"
   needs:
-    - build:docker-8.2
+    - test:bamboo-9.0-docker
+
+build:bamboo-8.2-docker:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-bamboo-8.2-docker"
+    paths:
+      - packer/*/output-docker
+  variables:
+    _IMAGE: "bamboo-8.2"
+    _PROVIDER: "docker"
+
+test:bamboo-8.2-docker:
+  <<: *job-molecule-test
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-bamboo-8.2-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "bamboo-8.2"
+    _PROVIDER: "docker"
+  needs:
+    - build:bamboo-8.2-docker
+
+deploy:bamboo-8.2-docker:
+  <<: *job-docker-push
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-bamboo-8.2-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "bamboo-8.2"
+    _PROVIDER: "docker"
+  needs:
+    - test:bamboo-8.2-docker

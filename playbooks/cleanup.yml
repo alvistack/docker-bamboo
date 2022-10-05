@@ -70,5 +70,7 @@
         subscription-manager remove --all
         subscription-manager unregister
         subscription-manager clean
+      args:
+        executable: "/bin/bash"
       changed_when: false
       failed_when: false

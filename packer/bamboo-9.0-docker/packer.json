@@ -46,6 +46,20 @@
       "type": "shell"
     },
     {
+      "inline": [
+        "set -eu",
+        "groupadd -g 999 bamboo",
+        "useradd -g 999 -u 999 -d /var/atlassian/application-data/bamboo -s /bin/bash -m bamboo",
+        "chown -Rf bamboo:bamboo /var/atlassian/application-data/bamboo",
+        "mkdir -p /etc/sudoers.d",
+        "chmod 0755 /etc/sudoers.d",
+        "echo \"bamboo ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/bamboo",
+        "chmod 0440 /etc/sudoers.d/bamboo",
+        "chown -Rf root:root /etc/sudoers.d"
+      ],
+      "type": "shell"
+    },
+    {
       "galaxy_file": "./ansible-galaxy-requirements.yml",
       "inventory_directory": "./",
       "playbook_file": "./packer.yml",
