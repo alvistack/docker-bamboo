@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+  - Default with openJDK 11
+
 ## 20220915.1.1 - 2022-09-15
 
 ### Major Changes

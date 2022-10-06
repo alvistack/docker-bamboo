@@ -19,7 +19,7 @@ containers_common_engine_cgroup_manager: "cgroupfs"
 containers_common_storage_driver: "vfs"
 
 # openjdk
-openjdk_release: "8"
+openjdk_release: "11"
 
 # bamboo
 bamboo_owner: "bamboo"
@@ -36,6 +36,4 @@ bamboo_catalina_context_path: "/"
 bamboo_jvm_support_recommended_args: >-
   -Datlassian.plugins.enable.wait=300
   -XX:+UnlockExperimentalVMOptions
-  -XX:+UseCGroupMemoryLimitForHeap
-  -XX:MaxRAMFraction=1
 bamboo_session_timeout: "120"
