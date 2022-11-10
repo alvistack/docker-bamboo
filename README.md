@@ -13,10 +13,10 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective Packer Template Links
 
-  - [`alvistack/bamboo-9.0`](https://hub.docker.com/r/alvistack/bamboo-9.0)
-      - [`packer/docker-9.0/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.0/packer.json)
-  - [`alvistack/bamboo-8.2`](https://hub.docker.com/r/alvistack/bamboo-8.2)
-      - [`packer/docker-8.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-8.2/packer.json)
+-   [`alvistack/bamboo-9.0`](https://hub.docker.com/r/alvistack/bamboo-9.0)
+    -   [`packer/docker-9.0/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.0/packer.json)
+-   [`alvistack/bamboo-8.2`](https://hub.docker.com/r/alvistack/bamboo-8.2)
+    -   [`packer/docker-8.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-8.2/packer.json)
 
 ## Overview
 
@@ -24,8 +24,8 @@ This Docker container makes it easy to get an instance of Bamboo up and running.
 
 Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
-  - Packaging by Packer Docker builder and Ansible provisioner in single layer
-  - Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
+-   Packaging by Packer Docker builder and Ansible provisioner in single layer
+-   Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
 
 ### Quick Start
 
@@ -37,7 +37,7 @@ Start Atlassian Bamboo Server:
 
     # Pull latest image
     docker pull alvistack/bamboo-9.0
-    
+
     # Run as detach
     docker run \
         -itd \
@@ -57,8 +57,8 @@ Simply running this image as Bamboo Remote Agent, by directly specify the path o
 
 This is because image already coming with dependencies that required for running Bamboo Server or Remote Agent, therefore the Remote Agent JAR could also be found from:
 
-  - /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
-  - /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
+-   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
+-   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
 
 Start Atlassian Bamboo Remote Agent:
 
@@ -110,11 +110,11 @@ Version tags ended with `.0.0` are rolling release rebuild by [GitLab pipeline](
 
 ## License
 
-  - Code released under [Apache License 2.0](LICENSE)
-  - Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+-   Code released under [Apache License 2.0](LICENSE)
+-   Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
 
 ## Author Information
 
-  - Wong Hoi Sing Edison
-      - <https://twitter.com/hswong3i>
-      - <https://github.com/hswong3i>
+-   Wong Hoi Sing Edison
+    -   <https://twitter.com/hswong3i>
+    -   <https://github.com/hswong3i>
