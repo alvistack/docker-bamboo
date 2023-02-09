@@ -134,6 +134,45 @@ default:
   before_script:
     - *script-git-submodule
 
+build:bamboo-9.2-docker:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-bamboo-9.2-docker"
+    paths:
+      - packer/*/output-docker
+  variables:
+    _IMAGE: "bamboo-9.2"
+    _PROVIDER: "docker"
+
+test:bamboo-9.2-docker:
+  <<: *job-molecule-test
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-bamboo-9.2-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "bamboo-9.2"
+    _PROVIDER: "docker"
+  needs:
+    - build:bamboo-9.2-docker
+
+deploy:bamboo-9.2-docker:
+  <<: *job-docker-push
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-bamboo-9.2-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "bamboo-9.2"
+    _PROVIDER: "docker"
+  needs:
+    - test:bamboo-9.2-docker
+
 build:bamboo-9.1-docker:
   <<: *job-packer-build
   stage: build
@@ -172,45 +211,6 @@ deploy:bamboo-9.1-docker:
     _PROVIDER: "docker"
   needs:
     - test:bamboo-9.1-docker
-
-build:bamboo-9.0-docker:
-  <<: *job-packer-build
-  stage: build
-  cache:
-    key: "$CI_PIPELINE_ID-bamboo-9.0-docker"
-    paths:
-      - packer/*/output-docker
-  variables:
-    _IMAGE: "bamboo-9.0"
-    _PROVIDER: "docker"
-
-test:bamboo-9.0-docker:
-  <<: *job-molecule-test
-  stage: test
-  cache:
-    key: "$CI_PIPELINE_ID-bamboo-9.0-docker"
-    paths:
-      - packer/*/output-docker
-    policy: pull
-  variables:
-    _IMAGE: "bamboo-9.0"
-    _PROVIDER: "docker"
-  needs:
-    - build:bamboo-9.0-docker
-
-deploy:bamboo-9.0-docker:
-  <<: *job-docker-push
-  stage: deploy
-  cache:
-    key: "$CI_PIPELINE_ID-bamboo-9.0-docker"
-    paths:
-      - packer/*/output-docker
-    policy: pull
-  variables:
-    _IMAGE: "bamboo-9.0"
-    _PROVIDER: "docker"
-  needs:
-    - test:bamboo-9.0-docker
 
 build:bamboo-8.2-docker:
   <<: *job-packer-build
