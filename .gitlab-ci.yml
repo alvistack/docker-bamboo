@@ -5,6 +5,12 @@
     git submodule sync --recursive
     git submodule update --init --recursive
 
+.script-linters: &script-linters
+  - |
+    flake8
+    yamllint .
+    ansible-lint
+
 .script-bootstrap-python: &script-bootstrap-python
   - |
     if ! [[ -x "$(command -v pipx)" ]]; then
@@ -64,12 +70,6 @@
     fi
     sh -x -c "packer --version"
 
-.script-linters: &script-linters
-  - |
-    flake8
-    yamllint .
-    ansible-lint
-
 .script-packer-build: &script-packer-build
   - |
     echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
@@ -111,7 +111,6 @@
     - *script-bootstrap-ansible
     - *script-bootstrap-docker
     - *script-bootstrap-packer
-    - *script-linters
     - *script-packer-build
 
 .job-molecule-test: &job-molecule-test
@@ -133,6 +132,7 @@ default:
   retry: 2
   before_script:
     - *script-git-submodule
+    - *script-linters
 
 build:bamboo-9.2-docker:
   <<: *job-packer-build
