@@ -21,11 +21,6 @@ platforms:
     image: alvistack/bamboo-9.1
     pre_build_image: true
     privileged: true
-lint: |
-  set -euxo pipefail
-  flake8
-  yamllint .
-  ansible-lint
 dependency:
   name: galaxy
   options:
