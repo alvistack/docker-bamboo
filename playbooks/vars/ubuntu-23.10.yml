@@ -14,4 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-requires_ansible: ">=2.13.0"
+_apt:
+  - { state: "latest", name: "ca-certificates" }
+  - { state: "latest", name: "curl" }
+  - { state: "latest", name: "gcc" }
+  - { state: "latest", name: "iproute2" }
+  - { state: "latest", name: "make" }
+  - { state: "latest", name: "passwd" }
+  - { state: "latest", name: "python3" }
+  - { state: "latest", name: "rsync" }
+  - { state: "latest", name: "sudo" }
+  - { state: "latest", name: "util-linux" }
