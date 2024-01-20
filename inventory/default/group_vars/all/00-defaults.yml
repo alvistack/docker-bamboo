@@ -18,9 +18,6 @@
 containers_common_engine_cgroup_manager: "cgroupfs"
 containers_common_storage_driver: "vfs"
 
-# openjdk
-openjdk_release: "11"
-
 # bamboo
 bamboo_owner: "bamboo"
 bamboo_group: "bamboo"
