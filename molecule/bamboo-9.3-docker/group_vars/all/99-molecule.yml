@@ -15,3 +15,5 @@
 # limitations under the License.
 
 bamboo_release: "9.3"
+
+openjdk_release: "11"
