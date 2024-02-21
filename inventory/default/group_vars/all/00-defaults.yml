@@ -34,5 +34,6 @@ bamboo_catalina_connector_proxyport: ~
 bamboo_catalina_context_path: ~
 bamboo_jvm_support_recommended_args: >-
   -Datlassian.plugins.enable.wait=300
+  -XX:+IgnoreUnrecognizedVMOptions
   -XX:+UnlockExperimentalVMOptions
 bamboo_autologin_cookie_age: "120"
