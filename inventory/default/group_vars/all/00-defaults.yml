@@ -36,4 +36,5 @@ bamboo_jvm_support_recommended_args: >-
   -Datlassian.plugins.enable.wait=300
   -XX:+IgnoreUnrecognizedVMOptions
   -XX:+UnlockExperimentalVMOptions
-bamboo_autologin_cookie_age: "120"
+bamboo_session_timeout: "120"
+bamboo_autologin_cookie_age: "10080"
