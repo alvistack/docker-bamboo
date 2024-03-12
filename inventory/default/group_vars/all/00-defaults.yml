@@ -15,23 +15,23 @@
 # limitations under the License.
 
 # containers_common
-containers_common_engine_cgroup_manager: "cgroupfs"
-containers_common_storage_driver: "vfs"
+containers_common_engine_cgroup_manager: cgroupfs
+containers_common_storage_driver: vfs
 
 # bamboo
-bamboo_owner: "bamboo"
-bamboo_group: "bamboo"
-bamboo_home: "/var/atlassian/application-data/bamboo"
-bamboo_catalina: "/opt/atlassian/bamboo"
-bamboo_jvm_minimum_memory: "2048m"
-bamboo_jvm_maximum_memory: "2048m"
-bamboo_jvm_reserved_code_cache_size: "512m"
+bamboo_owner: bamboo
+bamboo_group: bamboo
+bamboo_home: /var/atlassian/application-data/bamboo
+bamboo_catalina: /opt/atlassian/bamboo
+bamboo_jvm_minimum_memory: 2048m
+bamboo_jvm_maximum_memory: 2048m
+bamboo_jvm_reserved_code_cache_size: 512m
 bamboo_catalina_connector_port: "8085"
-bamboo_catalina_connector_scheme: ~
-bamboo_catalina_connector_secure: ~
-bamboo_catalina_connector_proxyname: ~
-bamboo_catalina_connector_proxyport: ~
-bamboo_catalina_context_path: ~
+bamboo_catalina_connector_scheme:
+bamboo_catalina_connector_secure:
+bamboo_catalina_connector_proxyname:
+bamboo_catalina_connector_proxyport:
+bamboo_catalina_context_path:
 bamboo_jvm_support_recommended_args: >-
   -Datlassian.plugins.enable.wait=300
   -XX:+IgnoreUnrecognizedVMOptions

@@ -15,13 +15,13 @@
 # limitations under the License.
 
 _apt:
-  - { state: "latest", name: "ca-certificates" }
-  - { state: "latest", name: "curl" }
-  - { state: "latest", name: "gcc" }
-  - { state: "latest", name: "iproute2" }
-  - { state: "latest", name: "make" }
-  - { state: "latest", name: "passwd" }
-  - { state: "latest", name: "python3" }
-  - { state: "latest", name: "rsync" }
-  - { state: "latest", name: "sudo" }
-  - { state: "latest", name: "util-linux" }
+  - { state: latest, name: ca-certificates }
+  - { state: latest, name: curl }
+  - { state: latest, name: gcc }
+  - { state: latest, name: iproute2 }
+  - { state: latest, name: make }
+  - { state: latest, name: passwd }
+  - { state: latest, name: python3 }
+  - { state: latest, name: rsync }
+  - { state: latest, name: sudo }
+  - { state: latest, name: util-linux }
