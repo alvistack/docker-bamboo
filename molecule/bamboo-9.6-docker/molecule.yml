@@ -18,7 +18,7 @@ driver:
   name: podman
 platforms:
   - name: ${_MOLECULE_INSTANCE_NAME}-1
-    image: alvistack/bamboo-9.4
+    image: alvistack/bamboo-9.6
     pre_build_image: true
     privileged: true
 dependency:
