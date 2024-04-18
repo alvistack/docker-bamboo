@@ -19,7 +19,7 @@
         "CMD [\"start-bamboo.sh\", \"-fg\"]"
       ],
       "commit": true,
-      "image": "ubuntu:22.04",
+      "image": "ubuntu:24.04",
       "privileged": true,
       "type": "docker"
     }
