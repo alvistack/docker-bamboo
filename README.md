@@ -19,14 +19,14 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
 
 ## Supported Tags and Respective Packer Template Links
 
--   [`alvistack/bamboo-9.6`](https://hub.docker.com/r/alvistack/bamboo-9.6)
-    -   [`packer/docker-9.6/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.6/packer.json)
--   [`alvistack/bamboo-9.5`](https://hub.docker.com/r/alvistack/bamboo-9.5)
-    -   [`packer/docker-9.5/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.5/packer.json)
--   [`alvistack/bamboo-9.2`](https://hub.docker.com/r/alvistack/bamboo-9.2)
-    -   [`packer/docker-9.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.2/packer.json)
--   [`alvistack/bamboo-8.2`](https://hub.docker.com/r/alvistack/bamboo-8.2)
-    -   [`packer/docker-8.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-8.2/packer.json)
+- [`alvistack/bamboo-9.6`](https://hub.docker.com/r/alvistack/bamboo-9.6)
+  - [`packer/docker-9.6/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.6/packer.json)
+- [`alvistack/bamboo-9.5`](https://hub.docker.com/r/alvistack/bamboo-9.5)
+  - [`packer/docker-9.5/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.5/packer.json)
+- [`alvistack/bamboo-9.2`](https://hub.docker.com/r/alvistack/bamboo-9.2)
+  - [`packer/docker-9.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.2/packer.json)
+- [`alvistack/bamboo-8.2`](https://hub.docker.com/r/alvistack/bamboo-8.2)
+  - [`packer/docker-8.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-8.2/packer.json)
 
 ## Overview
 
@@ -36,10 +36,10 @@ running.
 Based on [Official Ubuntu Docker
 Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
--   Packaging by Packer Docker builder and Ansible provisioner in single
-    layer
--   Handle `ENTRYPOINT` with
-    [catatonit](https://github.com/openSUSE/catatonit)
+- Packaging by Packer Docker builder and Ansible provisioner in single
+  layer
+- Handle `ENTRYPOINT` with
+  [catatonit](https://github.com/openSUSE/catatonit)
 
 ### Quick Start
 
@@ -83,8 +83,8 @@ This is because image already coming with dependencies that required for
 running Bamboo Server or Remote Agent, therefore the Remote Agent JAR
 could also be found from:
 
--   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
--   /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
+- /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/atlassian-bamboo-agent-installer-X.Y.Z.jar
+- /opt/atlassian/bamboo/atlassian-bamboo/admin/agent/bamboo-agent-X.Y.Z.jar
 
 Start Atlassian Bamboo Remote Agent:
 
@@ -154,12 +154,12 @@ latest packages provided by the base image project.
 
 ## License
 
--   Code released under [Apache License 2.0](LICENSE)
--   Docs released under [CC BY
-    4.0](http://creativecommons.org/licenses/by/4.0/)
+- Code released under [Apache License 2.0](LICENSE)
+- Docs released under [CC BY
+  4.0](http://creativecommons.org/licenses/by/4.0/)
 
 ## Author Information
 
--   Wong Hoi Sing Edison
-    -   <https://twitter.com/hswong3i>
-    -   <https://github.com/hswong3i>
+- Wong Hoi Sing Edison
+  - <https://twitter.com/hswong3i>
+  - <https://github.com/hswong3i>
