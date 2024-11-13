@@ -27,8 +27,8 @@ bamboo_jvm_minimum_memory: 2048m
 bamboo_jvm_maximum_memory: 2048m
 bamboo_jvm_reserved_code_cache_size: 512m
 bamboo_catalina_connector_port: "8085"
-bamboo_catalina_connector_scheme:
-bamboo_catalina_connector_secure:
+bamboo_catalina_connector_scheme: "http"
+bamboo_catalina_connector_secure: "false"
 bamboo_catalina_connector_proxyname:
 bamboo_catalina_connector_proxyport:
 bamboo_catalina_context_path:
@@ -36,5 +36,10 @@ bamboo_jvm_support_recommended_args: >-
   -Datlassian.plugins.enable.wait=300
   -XX:+IgnoreUnrecognizedVMOptions
   -XX:+UnlockExperimentalVMOptions
+bamboo_jvm_gc_args: >-
+  -XX:+UseZGC
+  -XX:ZCollectionInterval=5
+  -XX:ZAllocationSpikeTolerance=5
+  -XX:+ExplicitGCInvokesConcurrent  
 bamboo_session_timeout: "120"
 bamboo_autologin_cookie_age: "10080"
