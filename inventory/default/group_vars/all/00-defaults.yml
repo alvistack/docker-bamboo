@@ -40,6 +40,6 @@ bamboo_jvm_gc_args: >-
   -XX:+UseZGC
   -XX:ZCollectionInterval=5
   -XX:ZAllocationSpikeTolerance=5
-  -XX:+ExplicitGCInvokesConcurrent  
+  -XX:+ExplicitGCInvokesConcurrent
 bamboo_session_timeout: "120"
 bamboo_autologin_cookie_age: "10080"
