@@ -16,4 +16,4 @@
 
 bamboo_release: "10.1"
 
-openjdk_release: "17"
+openjdk_release: "21"
