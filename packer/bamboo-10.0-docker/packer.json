@@ -1,0 +1,71 @@
+{
+  "builders": [
+    {
+      "changes": [
+        "ENV LANG=en_US.UTF-8",
+        "ENV LC_ALL=en_US.UTF-8",
+        "ENV SHELL=/bin/bash",
+        "ENV TZ=UTC",
+        "ENV BAMBOO_OWNER=bamboo",
+        "ENV BAMBOO_GROUP=bamboo",
+        "ENV BAMBOO_HOME=/var/atlassian/application-data/bamboo",
+        "ENV BAMBOO_CATALINA=/opt/atlassian/bamboo",
+        "ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/atlassian/bamboo/bin",
+        "VOLUME /var/atlassian/application-data/bamboo",
+        "WORKDIR /var/atlassian/application-data/bamboo",
+        "EXPOSE 8007",
+        "EXPOSE 8085",
+        "ENTRYPOINT [\"catatonit\", \"-g\", \"--\", \"docker-entrypoint.sh\"]",
+        "CMD [\"start-bamboo.sh\", \"-fg\"]"
+      ],
+      "commit": true,
+      "image": "ubuntu:24.04",
+      "privileged": true,
+      "type": "docker"
+    }
+  ],
+  "post-processors": [
+    {
+      "inline": [
+        "set -eu",
+        "export _ID=$(docker images | awk '{ print $3 }' | awk 'NR==2')",
+        "mkdir -p output-docker",
+        "docker save $_ID | gzip -9 > output-docker/image.tar.gz"
+      ],
+      "type": "shell-local"
+    }
+  ],
+  "provisioners": [
+    {
+      "inline": [
+        "set -eu",
+        "apt-get update",
+        "DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
+        "DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo"
+      ],
+      "type": "shell"
+    },
+    {
+      "inline": [
+        "set -eu",
+        "groupadd -g 999 bamboo",
+        "useradd -g 999 -u 999 -d /var/atlassian/application-data/bamboo -s /bin/bash -m bamboo",
+        "chown -Rf bamboo:bamboo /var/atlassian/application-data/bamboo",
+        "mkdir -p /etc/sudoers.d",
+        "chmod 0755 /etc/sudoers.d",
+        "echo \"bamboo ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/bamboo",
+        "chmod 0440 /etc/sudoers.d/bamboo",
+        "chown -Rf root:root /etc/sudoers.d"
+      ],
+      "type": "shell"
+    },
+    {
+      "galaxy_file": "./ansible-galaxy-requirements.yml",
+      "inventory_directory": "./",
+      "playbook_file": "./packer.yml",
+      "type": "ansible",
+      "user": "root"
+    }
+  ]
+}
+
