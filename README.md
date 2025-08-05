@@ -23,8 +23,6 @@ Learn more about Bamboo: <https://www.atlassian.com/software/bamboo>
   - [`packer/docker-11.0/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-11.0/packer.json)
 - [`alvistack/bamboo-10.2`](https://hub.docker.com/r/alvistack/bamboo-10.2)
   - [`packer/docker-10.2/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-10.2/packer.json)
-- [`alvistack/bamboo-9.6`](https://hub.docker.com/r/alvistack/bamboo-9.6)
-  - [`packer/docker-9.6/packer.json`](https://github.com/alvistack/docker-bamboo/blob/master/packer/docker-9.6/packer.json)
 
 ## Overview
 
