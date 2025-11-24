@@ -134,44 +134,44 @@ default:
     - *script-git-submodule
     - *script-linters
 
-build:bamboo-11.0-docker:
+build:bamboo-12.0-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: $CI_PIPELINE_ID-bamboo-11.0-docker
+    key: $CI_PIPELINE_ID-bamboo-12.0-docker
     paths:
       - packer/*/output-docker
   variables:
-    _IMAGE: bamboo-11.0
+    _IMAGE: bamboo-12.0
     _PROVIDER: docker
 
-test:bamboo-11.0-docker:
+test:bamboo-12.0-docker:
   <<: *job-molecule-test
   stage: test
   cache:
-    key: $CI_PIPELINE_ID-bamboo-11.0-docker
+    key: $CI_PIPELINE_ID-bamboo-12.0-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: bamboo-11.0
+    _IMAGE: bamboo-12.0
     _PROVIDER: docker
   needs:
-    - build:bamboo-11.0-docker
+    - build:bamboo-12.0-docker
 
-deploy:bamboo-11.0-docker:
+deploy:bamboo-12.0-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: $CI_PIPELINE_ID-bamboo-11.0-docker
+    key: $CI_PIPELINE_ID-bamboo-12.0-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: bamboo-11.0
+    _IMAGE: bamboo-12.0
     _PROVIDER: docker
   needs:
-    - test:bamboo-11.0-docker
+    - test:bamboo-12.0-docker
 
 build:bamboo-10.2-docker:
   <<: *job-packer-build
