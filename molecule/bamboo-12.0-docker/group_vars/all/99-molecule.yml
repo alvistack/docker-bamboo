@@ -17,3 +17,5 @@
 bamboo_release: "12.0"
 
 openjdk_release: "21"
+
+git_release: "2.50"
