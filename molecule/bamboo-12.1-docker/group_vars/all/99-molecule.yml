@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-bamboo_release: "12.0"
+bamboo_release: "12.1"
 
 openjdk_release: "21"
 
